@@ -1,13 +1,15 @@
 from django.shortcuts import render, redirect
-from users.forms import RegisterModelForm, login_form ,CustomePasswordChangeForm,CustomPasswordResetForm
+from users.forms import RegisterModelForm, login_form ,CustomePasswordChangeForm,CustomPasswordResetForm,CustomPasswordConfirmResetForm,EditProfileModelForm
 from django.contrib import messages
-from django.contrib.auth.views import LoginView,PasswordChangeView,PasswordChangeDoneView ,PasswordResetView
+from django.contrib.auth.views import LoginView,PasswordChangeView,PasswordChangeDoneView ,PasswordResetView ,PasswordResetConfirmView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView,UpdateView
 from users.models import CustomUser
 from django.contrib.auth.tokens import default_token_generator
 from django.http import HttpResponse
 from django.urls import reverse_lazy
+
+
   
 
 # Create your views here.
@@ -70,15 +72,16 @@ class ProfileView(LoginRequiredMixin,TemplateView):
 
 
 
-class ChangePassword(PasswordChangeView):
+class ChangePassword(LoginRequiredMixin,PasswordChangeView):
     template_name='account/password_change.html'
     form_class=CustomePasswordChangeForm
 
 
-class CustomPasswordView(PasswordResetView):
+class CustomPasswordResetView(PasswordResetView):
     form_class=CustomPasswordResetForm
-    template_name='registration/reset_password.html'
+    template_name='registration/send_email.html'
     success_url=reverse_lazy('sign-in')
+    html_email_template_name='registration/reset_email.html'
 
     def get_context_data(self,**kwargs):
         context=super().get_context_data(**kwargs)
@@ -89,3 +92,27 @@ class CustomPasswordView(PasswordResetView):
     def form_valid(self,form):
         messages.success(self.request,'A Reset Email send! Please Check Your Email')
         return super().form_valid(form)
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    form_class=CustomPasswordConfirmResetForm
+    template_name='registration/reset_password.html'
+    success_url=reverse_lazy('sign-in')
+
+
+    def form_valid(self,form):
+        messages.success(self.request,'Password Reset Succesfully!')
+        return super().form_valid(form)
+
+
+class EditProfileView(LoginRequiredMixin,UpdateView):
+    model=CustomUser
+    form_class=EditProfileModelForm
+    context_object_name='form'
+    template_name='account/edit_profile.html'
+
+    def get_object(self,):
+        return self.request.user
+
+    def form_valid(self,form):
+        form.save()
+        return redirect('profile')

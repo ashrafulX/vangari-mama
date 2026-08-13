@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from core.views import home
+from core.views import home,about_us,contact_us,services
 from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
@@ -30,6 +30,11 @@ urlpatterns = [
 
 
     path('',home,name='home'),
+    path('about-us/',about_us,name='about-us'),
+    path('contact-us/',contact_us,name='contact-us'),
+    path('services/',services,name='services'),
+
+
 ]
 urlpatterns += static(
     settings.MEDIA_URL,

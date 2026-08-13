@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from django.contrib.auth.forms import UserCreationForm,AuthenticationForm,PasswordChangeForm ,PasswordResetForm
+from django.contrib.auth.forms import UserCreationForm,AuthenticationForm,PasswordChangeForm ,PasswordResetForm ,SetPasswordForm
 from users.models import CustomUser
 import re
 
@@ -156,3 +156,12 @@ class CustomePasswordChangeForm(StyleMixin,PasswordChangeForm):
 
 class CustomPasswordResetForm(StyleMixin,PasswordResetForm):
     pass
+
+class CustomPasswordConfirmResetForm(StyleMixin,SetPasswordForm):
+    pass
+
+
+class EditProfileModelForm(StyleMixin,forms.ModelForm):
+    class Meta:
+        model=CustomUser
+        fields=['first_name','last_name','email','phone','role','profile_image','bio','address','district']

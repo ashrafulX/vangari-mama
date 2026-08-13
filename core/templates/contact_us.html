@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Contact Us | Vangari Mama{% endblock title %}
+
+{% block content %}
+<div class="min-h-screen bg-slate-50 relative isolate overflow-hidden py-16 sm:py-24">
+    <!-- Background Elements -->
+    <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-green-50 via-slate-50 to-slate-50"></div>
+    <div class="absolute bottom-0 left-10 -z-10 h-96 w-96 rounded-full bg-[#0FA968]/15 blur-[120px]"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight sm:text-5xl">Get in Touch</h1>
+            <p class="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">Have a question about a pickup, pricing, or partnerships? We'd love to hear from you.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+            <!-- Contact Info Cards -->
+            <div class="lg:col-span-1 space-y-6">
+                <!-- Phone -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center text-center transition hover:shadow-md hover:border-emerald-100">
+                    <div class="h-12 w-12 bg-emerald-50 text-[#0FA968] rounded-xl flex items-center justify-center mb-4">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-2.896-1.596-5.48-4.18-7.076-7.076l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900">Call Us</h3>
+                    <p class="text-slate-500 text-sm mt-1">Sat-Thu from 9am to 6pm</p>
+                    <p class="text-[#0FA968] font-bold mt-2">+880 1590-026285</p>
+                </div>
+                <!-- Email -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center text-center transition hover:shadow-md hover:border-emerald-100">
+                    <div class="h-12 w-12 bg-emerald-50 text-[#0FA968] rounded-xl flex items-center justify-center mb-4">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900">Email Us</h3>
+                    <p class="text-slate-500 text-sm mt-1">We usually reply within 2 hours</p>
+                    <p class="text-[#0FA968] font-bold mt-2">ashrafulwho@gmail.com</p>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-[2rem] p-8 sm:p-12 shadow-xl border border-slate-100">
+                    <form action="#" method="POST" class="space-y-6">
+                        {% csrf_token %}
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-2">Full Name</label>
+                                <input type="text" name="name" class="w-full px-5 py-3.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-[#0FA968] focus:ring-4 focus:ring-emerald-100 outline-none transition" placeholder="John Doe" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-2">Email Address</label>
+                                <input type="email" name="email" class="w-full px-5 py-3.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-[#0FA968] focus:ring-4 focus:ring-emerald-100 outline-none transition" placeholder="john@example.com" required>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Subject</label>
+                            <input type="text" name="subject" class="w-full px-5 py-3.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-[#0FA968] focus:ring-4 focus:ring-emerald-100 outline-none transition" placeholder="How can we help you?" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Message</label>
+                            <textarea name="message" rows="5" class="w-full px-5 py-3.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-[#0FA968] focus:ring-4 focus:ring-emerald-100 outline-none transition resize-none" placeholder="Write your message here..." required></textarea>
+                        </div>
+                        <button type="submit" class="w-full flex items-center justify-center gap-2 rounded-xl bg-[#0FA968] px-8 py-4 text-base font-bold text-white shadow-lg shadow-emerald-500/30 transition-all hover:-translate-y-0.5 hover:bg-[#0c8e57] outline-none">
+                            Send Message
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" /></svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
