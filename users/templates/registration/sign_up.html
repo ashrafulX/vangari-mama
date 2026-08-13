@@ -1,21 +1,87 @@
+{% extends "base.html" %}
+{% load static %}
 {% load socialaccount %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sign up</title>
-</head>
-<body>
-    <div>
-        <form action="" method='POST'>
-            {% csrf_token %}
-            {{form}}
-            <button type='submit'>submit</button>
-        </form>
-        <a href="{% provider_login_url 'google' %}">
-            Continue with Google
-        </a>
+
+{% block title %}Create Account | Vangari Mama{% endblock title %}
+
+{% block content %}
+<!-- Custom styles to beautify Django's default {{ form }} -->
+<style>
+  .django-auth-form label { display: block; font-size: 0.875rem; font-weight: 700; color: #1e293b; margin-bottom: 0.5rem; }
+  .django-auth-form input, .django-auth-form select { width: 100%; padding: 0.875rem 1rem; border-radius: 0.75rem; border: 1px solid #e2e8f0; background-color: #f8fafc; color: #0f172a; transition: all 0.3s ease; margin-bottom: 1.25rem; font-size: 0.95rem; }
+  .django-auth-form input:focus { outline: none; border-color: #10b981; background-color: #ffffff; box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15); }
+  .django-auth-form .helptext { display: block; font-size: 0.75rem; color: #64748b; margin-top: -1rem; margin-bottom: 1rem; }
+  .django-auth-form ul.errorlist { color: #ef4444; font-size: 0.85rem; font-weight: 500; background: #fef2f2; padding: 0.5rem 1rem; border-radius: 0.5rem; margin-bottom: 1rem; }
+</style>
+
+<div class="min-h-[90vh] flex items-center justify-center bg-slate-50 relative isolate overflow-hidden py-12 px-4 sm:px-6 lg:px-8">
+    <!-- Background Gradients -->
+    <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-green-100/50 via-slate-50 to-slate-50"></div>
+    <div class="absolute top-0 right-0 -z-10 h-[40rem] w-[40rem] -translate-y-1/2 translate-x-1/3 rounded-full bg-emerald-200/40 blur-[100px]"></div>
+
+    <div class="max-w-5xl w-full bg-white rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col lg:flex-row border border-slate-100">
+        
+        <!-- Left Side: Branding / Info -->
+        <div class="lg:w-5/12 bg-gradient-to-br from-[#14532D] to-emerald-800 p-12 text-white flex flex-col justify-between relative overflow-hidden hidden md:flex">
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')] [background-size:24px_24px]"></div>
+            <div class="relative z-10">
+                <h2 class="text-3xl font-extrabold tracking-tight mb-4">Join the Green Revolution.</h2>
+                <p class="text-emerald-100/80 leading-relaxed text-sm">
+                    Create an account to start selling your scrap materials at the best market rates. Instant matching, accurate weight, and guaranteed payments.
+                </p>
+            </div>
+            <div class="relative z-10 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 mt-8">
+                <div class="flex items-center gap-4 mb-3">
+                    <div class="flex -space-x-2">
+                        <div class="h-8 w-8 rounded-full bg-emerald-500 border-2 border-[#14532D]"></div>
+                        <div class="h-8 w-8 rounded-full bg-green-400 border-2 border-[#14532D]"></div>
+                        <div class="h-8 w-8 rounded-full bg-teal-300 border-2 border-[#14532D]"></div>
+                    </div>
+                    <p class="text-sm font-bold">12k+ Active Users</p>
+                </div>
+                <p class="text-xs text-emerald-200">"Vangari Mama has completely changed how we manage our industrial waste."</p>
+            </div>
+        </div>
+
+        <!-- Right Side: Form -->
+        <div class="lg:w-7/12 p-8 sm:p-12 lg:p-16">
+            <div class="text-center md:text-left mb-8">
+                <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Create Account</h1>
+                <p class="mt-2 text-sm text-slate-500">Already have an account? <a href="{% url 'sign-in' %}" class="font-bold text-emerald-600 hover:text-emerald-500 transition-colors">Sign in here</a></p>
+            </div>
+
+            <!-- Google Sign Up Button -->
+            <a href="{% provider_login_url 'google' %}" class="w-full flex items-center justify-center gap-3 bg-white border border-slate-200 rounded-xl px-4 py-3.5 text-sm font-bold text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm mb-6 group">
+                <svg class="h-5 w-5 transition-transform group-hover:scale-110" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                </svg>
+                Continue with Google
+            </a>
+
+            <!-- Divider -->
+            <div class="relative flex items-center py-4 mb-2">
+                <div class="flex-grow border-t border-slate-200"></div>
+                <span class="flex-shrink-0 mx-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Or register with email</span>
+                <div class="flex-grow border-t border-slate-200"></div>
+            </div>
+
+            <!-- Standard Django Form -->
+            <form action="" method="POST" class="django-auth-form mt-4">
+                {% csrf_token %}
+                
+                {{ form }}
+                
+                <button type="submit" class="w-full mt-4 flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-8 py-4 text-sm font-bold text-white shadow-[0_0_15px_rgba(16,185,129,0.3)] transition-all hover:-translate-y-0.5 hover:bg-emerald-700 hover:shadow-[0_0_25px_rgba(16,185,129,0.5)]">
+                    Create My Account
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                    </svg>
+                </button>
+            </form>
+        </div>
     </div>
-</body>
-</html>
+</div>
+{% endblock content %}

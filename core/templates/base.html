@@ -1,0 +1,336 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}VANGARI MAMA{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+</head>
+<body class="bg-gray-100 flex flex-col min-h-screen font-sans antialiased">
+
+    <!-- Header Section -->
+<header class="bg-[#14532D]/95 backdrop-blur-lg border-b border-white/10 text-white sticky top-0 z-50 shadow-2xl shadow-[#14532D]/10 transition-all duration-300">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-20">
+            
+            <!-- Logo -->
+            <div class="flex-shrink-0 flex items-center">
+                <a href="{% url 'home' %}" class="group text-2xl font-extrabold tracking-widest text-white transition-all hover:opacity-90">
+                    VANGARI <span class="text-green-400 group-hover:text-white transition-colors">MAMA.</span>
+                </a>
+            </div>
+
+            <!-- Desktop Navigation (Center) -->
+            <div class="hidden md:flex items-center justify-center flex-1 px-8">
+                <div class="flex space-x-2 lg:space-x-6">
+                    {% if user.is_authenticated %} 
+                    <a href="#" class="relative px-2 py-2 text-sm font-bold text-gray-200 transition-colors hover:text-white group">
+                        DASHBOARD
+                        <span class="absolute inset-x-2 -bottom-1 h-0.5 bg-green-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></span>
+                    </a>
+                    {% endif %}
+                    <a href="#" class="relative px-2 py-2 text-sm font-bold text-gray-200 transition-colors hover:text-white group">
+                        MARKETPLACE
+                        <span class="absolute inset-x-2 -bottom-1 h-0.5 bg-green-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></span>
+                    </a>
+                    <a href="#" class="relative px-2 py-2 text-sm font-bold text-gray-200 transition-colors hover:text-white group">
+                        HOME
+                        <span class="absolute inset-x-2 -bottom-1 h-0.5 bg-green-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></span>
+                    </a>
+                    <a href="#" class="relative px-2 py-2 text-sm font-bold text-gray-200 transition-colors hover:text-white group">
+                        SERVICES
+                        <span class="absolute inset-x-2 -bottom-1 h-0.5 bg-green-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></span>
+                    </a>
+                    <a href="#" class="relative px-2 py-2 text-sm font-bold text-gray-200 transition-colors hover:text-white group">
+                        ABOUT US
+                        <span class="absolute inset-x-2 -bottom-1 h-0.5 bg-green-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></span>
+                    </a>
+                    <a href="#" class="relative px-2 py-2 text-sm font-bold text-gray-200 transition-colors hover:text-white group">
+                        CONTACT
+                        <span class="absolute inset-x-2 -bottom-1 h-0.5 bg-green-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Profile & Auth Buttons (Right) -->
+            <div class="hidden md:flex items-center gap-4">
+                {% if user.is_authenticated %}
+                    
+                    <!-- Notification Bell -->
+                    <button type="button" class="relative p-2 text-gray-200 hover:text-white transition-colors rounded-full hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-green-400">
+                        <span class="absolute top-2 right-2 flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500 border border-[#14532D]"></span>
+                        </span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+                        </svg>
+                    </button>
+
+                    <!-- Profile Dropdown -->
+                    <div class="relative ml-2">
+                        <!-- Profile Icon Button -->
+                        <button type="button" id="profile-button" class="flex h-11 w-11 overflow-hidden rounded-full border-2 border-white/20 focus:outline-none focus:border-green-400 transition-all hover:scale-105 hover:border-white/50 cursor-pointer z-50 shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+                            {% if user.profile_image %}
+                                <img src="{{ user.profile_image.url }}" alt="Profile" class="h-full w-full object-cover">
+                            {% else %}
+                                <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-green-500 to-[#14532D] text-white">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                                      <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            {% endif %}
+                        </button>
+
+                        <!-- Profile Dropdown Menu -->
+                        <div id="profile-dropdown" class="hidden absolute right-0 mt-3 w-56 rounded-2xl border border-gray-100 bg-white/95 backdrop-blur-xl shadow-2xl text-gray-800 z-50 overflow-hidden origin-top-right transition-all">
+                            <div class="px-4 py-3 border-b border-gray-100 bg-gray-50/50">
+                                <p class="text-sm font-semibold text-gray-900 truncate">{{ user.username }}</p>
+                                <p class="text-xs text-gray-500 truncate">{{ user.email }}</p>
+                            </div>
+                            <a href="#" class="block px-4 py-3 text-sm font-semibold hover:bg-green-50 hover:text-[#14532D] transition-colors flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+                                View Profile
+                            </a>
+                            <form method="POST" action="#">
+                                {% csrf_token %}
+                                <button type="submit" class="w-full flex items-center gap-2 px-4 py-3 text-left text-sm font-semibold text-red-600 hover:bg-red-50 transition-colors">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" /></svg>
+                                    Logout
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="flex items-center gap-5">
+                        <a href="{% url "sign-in" %}" class="text-sm font-bold text-gray-200 hover:text-white transition-colors">SIGN-IN</a>
+                        <a href="{% url "sign-up" %}" class="bg-white text-[#14532D] px-6 py-2.5 rounded-full text-sm font-extrabold hover:bg-gray-100 transition-all hover:scale-105 shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+                            SIGN-UP
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Mobile menu button -->
+            <div class="flex md:hidden items-center gap-3">
+                {% if user.is_authenticated %}
+                    <!-- Mobile Notification Bell -->
+                    <button type="button" class="relative p-2 text-white hover:bg-white/10 rounded-full transition-colors">
+                        <span class="absolute top-2 right-2 h-2 w-2 rounded-full bg-red-500 border border-[#14532D]"></span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+                        </svg>
+                    </button>
+                {% endif %}
+
+                <button type="button" id="mobile-menu-btn" class="inline-flex items-center justify-center p-2.5 rounded-full text-white bg-white/5 hover:bg-white/10 border border-white/10 focus:outline-none transition-colors">
+                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                        <path id="icon-menu" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16" />
+                        <path id="icon-close" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden bg-[#0F3D21]/95 backdrop-blur-xl border-t border-white/10 shadow-2xl">
+        <div class="px-4 pt-3 pb-6 space-y-2">
+            {% if user.is_authenticated %} 
+                <a href="#" class="block px-4 py-3 rounded-xl text-base font-bold bg-white/5 hover:bg-white/10 transition-colors">DASHBOARD</a>
+            {% endif %}
+            <a href="#" class="block px-4 py-3 rounded-xl text-base font-bold bg-white/5 hover:bg-white/10 transition-colors">MARKETPLACE</a>
+            <a href="#" class="block px-4 py-3 rounded-xl text-base font-bold text-gray-200 hover:text-white hover:bg-white/5 transition-colors">HOME</a>
+            <a href="#" class="block px-4 py-3 rounded-xl text-base font-bold text-gray-200 hover:text-white hover:bg-white/5 transition-colors">SERVICES</a>
+            <a href="#" class="block px-4 py-3 rounded-xl text-base font-bold text-gray-200 hover:text-white hover:bg-white/5 transition-colors">ABOUT US</a>
+            <a href="#" class="block px-4 py-3 rounded-xl text-base font-bold text-gray-200 hover:text-white hover:bg-white/5 transition-colors">CONTACT</a>
+        </div>
+        
+        <div class="pt-5 pb-6 border-t border-white/10 bg-[#0C321B]/50">
+            {% if user.is_authenticated %}
+                <div class="flex items-center px-6 gap-4">
+                    <div class="h-12 w-12 overflow-hidden rounded-full border-2 border-green-400/50 shadow-lg">
+                        {% if user.profile_image %}
+                            <img src="{{ user.profile_image.url }}" alt="Profile" class="h-full w-full object-cover">
+                        {% else %}
+                            <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-green-500 to-[#14532D] text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                                  <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm font-bold text-white">{{ user.username }}</p>
+                        <p class="text-xs text-gray-400">{{ user.email }}</p>
+                    </div>
+                </div>
+                <div class="mt-4 px-4 space-y-2">
+                    <a href="#" class="block px-4 py-3 rounded-xl text-base font-bold text-gray-200 hover:bg-white/10 transition-colors">View Profile</a>
+                    <form method="POST" action="#">
+                        {% csrf_token %}
+                        <button type="submit" class="block w-full text-left px-4 py-3 rounded-xl text-base font-bold text-red-400 hover:bg-red-500/10 transition-colors">
+                            Logout
+                        </button>
+                    </form>
+                </div>
+            {% else %}
+                <div class="flex flex-col gap-3 px-6">
+                    <a href="#" class="block text-center px-4 py-3 rounded-xl text-base font-bold border border-white/30 hover:bg-white/10 hover:border-white transition-colors">SIGN-IN</a>
+                    <a href="#" class="block text-center bg-white text-[#14532D] px-4 py-3 rounded-xl text-base font-extrabold hover:bg-gray-200 shadow-lg transition-colors">SIGN-UP</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</header>
+
+    <main class="flex-grow">
+        {% block content %}
+        
+        {% endblock content %}
+    </main>
+
+
+<!-- Footer -->
+<footer class="bg-[#14532D] text-white pt-12 pb-6 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
+        
+        <div>
+            <h2 class="text-xl md:text-2xl font-bold tracking-wide text-center md:text-left">
+                Sell your old items today & Earn Money
+            </h2>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center gap-4">
+            <h3 class="text-lg font-bold uppercase tracking-wider text-white">Stay Connected:</h3>
+
+            <div class="flex items-center gap-6">
+                <!-- LinkedIn -->
+                <a href="https://www.linkedin.com/in/ashrafulx/" target="_blank" class="text-gray-300 hover:text-white transition-colors" title="LinkedIn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                </a>
+
+                <!-- GitHub -->
+                <a href="https://github.com/ashrafulx/" target="_blank" class="text-gray-300 hover:text-white transition-colors" title="GitHub">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                </a>
+
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/a5rafulwho" target="_blank" class="text-gray-300 hover:text-white transition-colors" title="Instagram">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.919-.058-1.265-.069-1.646-.069-4.849 0-3.204.012-3.583.069-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.058-1.69-.072-4.949-.072zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="h-[1px] w-full bg-white/20 mb-10"></div>
+
+
+    <!-- Main Footer Content (Responsive Grid) -->
+    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8 text-center md:text-left">
+        
+        <!-- About Us -->
+        <div>
+            <h3 class="text-lg font-bold mb-4 uppercase tracking-wider text-white">About Us</h3>
+            <p class="text-sm text-gray-300 leading-relaxed">
+                Smart & digital scrap sell Buy platform. Sell old items from home with accurate digital weighing and live rates.
+            </p>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="flex flex-col space-y-3 md:items-start items-center">
+            <h3 class="text-lg font-bold mb-4 uppercase tracking-wider text-white">Quick Links</h3>
+            <a href="#" class="text-sm text-gray-300 hover:text-white transition-colors">HOME</a>
+            <a href="#" class="text-sm text-gray-300 hover:text-white transition-colors">OUR SERVICES</a>
+            <a href="#" class="text-sm text-gray-300 hover:text-white transition-colors">ABOUT US</a>
+        </div>
+
+        <!-- Support & Policy -->
+        <div class="flex flex-col space-y-3 md:items-start items-center">
+            <h3 class="text-lg font-bold mb-4 uppercase tracking-wider text-white">Support & Policy</h3>
+            <a href="#" class="text-sm text-gray-300 hover:text-white transition-colors">Terms & Conditions</a>
+            <a href="#" class="text-sm text-gray-300 hover:text-white transition-colors">Privacy & Policy</a>
+        </div>
+
+        <!-- Contact & Logo -->
+        <div class="flex flex-col space-y-4 md:items-start items-center">
+            <!-- Logo Section -->
+            <a href="#" class="text-2xl font-extrabold tracking-wider text-white inline-block mb-2">
+                VANGARI MAMA.
+                <img src="{% static 'images/small-logo.png' %}" alt="Vangari Mama Logo" class="h-10 w-auto bg-white px-2 mt-2 rounded"> 
+            </a>
+            
+            <!-- Contact Details -->
+            <div class="flex flex-col space-y-2 text-sm text-gray-300 mt-2 text-left">
+                <p class="flex items-center gap-2 hover:text-white transition-colors cursor-pointer">
+                    <span>📞</span> Phone: +880 1590-026285
+                </p>
+                <p class="flex items-center gap-2 hover:text-white transition-colors cursor-pointer">
+                    <span>✉️</span> Email: ashrafulwho@gmail.com
+                </p>
+                <p class="flex items-center gap-2 hover:text-white transition-colors cursor-pointer">
+                    <span>📍</span> Location: Dhaka, Bangladesh
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bottom Divider -->
+    <div class="h-[1px] w-full bg-white/20 mb-6"></div>
+
+    <!-- Copyright -->
+    <div class="max-w-7xl mx-auto px-4 text-center">
+        <p class="text-sm text-gray-400">&copy; 2024-2026 VANGARI MAMA. All rights reserved.</p>
+    </div>
+
+</footer>
+
+
+    <!--  Mobile Menu & Profile Dropdown -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Profile Dropdown (Desktop) ---
+            const profileBtn = document.getElementById('profile-button');
+            const profileDropdown = document.getElementById('profile-dropdown');
+            
+            if (profileBtn && profileDropdown) {
+                profileBtn.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    profileDropdown.classList.toggle('hidden');
+                });
+
+                document.addEventListener('click', function(event) {
+                    if (!profileBtn.contains(event.target) && !profileDropdown.contains(event.target)) {
+                        if (!profileDropdown.classList.contains('hidden')) {
+                            profileDropdown.classList.add('hidden');
+                        }
+                    }
+                });
+            }
+
+            // --- Mobile Menu Toggle ---
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const iconMenu = document.getElementById('icon-menu');
+            const iconClose = document.getElementById('icon-close');
+
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                    iconMenu.classList.toggle('hidden');
+                    iconClose.classList.toggle('hidden');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

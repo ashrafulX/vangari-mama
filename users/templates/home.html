@@ -1,72 +1,138 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Tailwind Page</title>
-    <!-- Tailwind CSS Play CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+{% extends "base.html" %}
+{% load static %}
+{% block title %}HOME{% endblock title %}
+{% block content %}
+<section class="relative isolate overflow-hidden bg-white pt-20 pb-24 lg:pt-32 lg:pb-36 min-h-screen flex items-center">
+  <!-- Ultra-Modern Background (Mesh / Radial Gradients) -->
+  <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-green-100/50 via-white to-white"></div>
+  <div class="absolute inset-y-0 right-1/2 -z-10 -mr-96 w-[200%] origin-top-right skew-x-[-30deg] bg-white shadow-xl shadow-green-100/20 ring-1 ring-green-50 sm:-mr-80 lg:-mr-96"></div>
 
-    <!-- Header Section -->
-    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-            <div class="text-xl font-bold text-indigo-600">BrandLogo</div>
-            <nav class="hidden md:flex space-x-6 text-sm font-medium text-slate-600">
-                <a href="#features" class="hover:text-indigo-600">Features</a>
-                <a href="#pricing" class="hover:text-indigo-600">Pricing</a>
-                <a href="#contact" class="hover:text-indigo-600">Contact</a>
-            </nav>
-            <button class="bg-indigo-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-indigo-700 transition">Get Started</button>
+  <!-- Animated Glowing Orbs -->
+  <div class="absolute top-20 right-20 -z-10 h-72 w-72 animate-pulse rounded-full bg-green-400/20 blur-[80px]"></div>
+  <div class="absolute bottom-10 left-20 -z-10 h-80 w-80 rounded-full bg-emerald-300/20 blur-[100px]"></div>
+
+  <div class="mx-auto max-w-7xl px-6 lg:px-8 w-full">
+    <div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-16 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-center">
+      
+      <!-- Left: Content & Copy -->
+      <div class="lg:pr-8">
+        <!-- New Premium Badge -->
+        <div class="mb-8 inline-flex items-center gap-3 rounded-full border border-green-200 bg-white/60 px-5 py-2 backdrop-blur-md shadow-sm">
+          <span class="flex h-2.5 w-2.5 relative">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-600"></span>
+          </span>
+          <span class="text-sm font-bold tracking-wide text-slate-800 uppercase">The #1 Scrap Exchange in BD</span>
         </div>
-    </header>
 
-    <!-- Hero Section -->
-    <section class="max-w-6xl mx-auto px-6 py-20 text-center md:py-32">
-        <span class="bg-indigo-50 text-indigo-600 text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full">New Release</span>
-        <h1 class="mt-4 text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900">Build faster with clean utility classes</h1>
-        <p class="mt-6 text-lg text-slate-600 max-w-2xl mx-auto">This is a random standard page layout designed completely with Tailwind CSS utility classes. Fully responsive, clean, and ready to use.</p>
-        <div class="mt-8 flex justify-center gap-4">
-            <button class="bg-indigo-600 text-white font-medium px-6 py-3 rounded-xl shadow-lg shadow-indigo-200 hover:bg-indigo-700 transition">Start Free Trial</button>
-            <button class="bg-white border border-slate-300 font-medium px-6 py-3 rounded-xl hover:bg-slate-50 transition">Learn More</button>
+        <!-- Headline with High Contrast -->
+        <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-6xl lg:leading-[1.1]">
+          Transform Waste into <br>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-green-500">Value. Instantly.</span>
+        </h1>
+
+        <!-- Engaging Description -->
+        <p class="mt-6 text-lg leading-8 text-slate-600">
+          The ultimate marketplace for scrap materials. Whether you are a household looking to sell old items for cash, or a factory sourcing raw recycled materials—we bridge the gap with real-time pricing and verified logistics.
+        </p>
+
+        <!-- CTAs -->
+        <div class="mt-10 flex flex-col sm:flex-row items-center gap-5">
+          <!-- Primary CTA (Sell) -->
+          <a href="#" class="group relative flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-emerald-600 px-8 py-4 text-base font-bold text-white shadow-[0_0_20px_rgba(5,150,105,0.4)] transition-all hover:-translate-y-1 hover:bg-emerald-700 hover:shadow-[0_0_30px_rgba(5,150,105,0.6)] overflow-hidden">
+            <span class="absolute inset-0 bg-white/20 translate-y-full transition-transform group-hover:translate-y-0 ease-out duration-300"></span>
+            <span class="relative flex items-center gap-2">
+              Start Selling
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="h-5 w-5 transition-transform group-hover:translate-x-1">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+              </svg>
+            </span>
+          </a>
+          
+          <!-- Secondary CTA (Buy/B2B) -->
+          <a href="#" class="group w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-white border-2 border-slate-200 px-8 py-3.5 text-base font-bold text-slate-700 transition-all hover:border-slate-800 hover:bg-slate-900 hover:text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-5 w-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z" />
+            </svg>
+            Corporate Buyer?
+          </a>
         </div>
-    </section>
 
-    <!-- Features Section -->
-    <section id="features" class="bg-white py-20 border-t border-slate-200">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="text-center">
-                <h2 class="text-3xl font-bold text-slate-900">Core Features</h2>
-                <p class="mt-2 text-slate-600">Everything you need to succeed online.</p>
+        <!-- Trust Signals / Divider -->
+        <div class="mt-12 flex items-center gap-x-6 border-t border-slate-200/60 pt-8">
+          <div class="flex -space-x-2">
+            <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=64&h=64" alt="">
+            <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=64&h=64" alt="">
+            <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=64&h=64" alt="">
+            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 ring-2 ring-white text-xs font-bold text-slate-600">+12k</div>
+          </div>
+          <div>
+            <div class="flex items-center gap-1 text-yellow-400">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" /></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" /></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" /></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" /></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" /></svg>
             </div>
-            <div class="mt-12 grid md:grid-cols-3 gap-8">
-                <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100">
-                    <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600 font-bold mb-4">01</div>
-                    <h3 class="text-xl font-semibold text-slate-900">Super Fast</h3>
-                    <p class="mt-2 text-slate-600 text-sm">Optimized layout styles built for lightning-fast loading speeds across all devices.</p>
-                </div>
-                <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100">
-                    <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600 font-bold mb-4">02</div>
-                    <h3 class="text-xl font-semibold text-slate-900">Responsive</h3>
-                    <p class="mt-2 text-slate-600 text-sm">Adapts seamlessly to mobile phones, tablets, and desktop screen sizes out of the box.</p>
-                </div>
-                <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100">
-                    <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600 font-bold mb-4">03</div>
-                    <h3 class="text-xl font-semibold text-slate-900">Customizable</h3>
-                    <p class="mt-2 text-slate-600 text-sm">Easily change colors, spacing, and typography using standard utility attributes.</p>
-                </div>
+            <p class="text-sm font-medium text-slate-600 mt-1">Trusted by 12,000+ happy users</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Premium Visual Composition -->
+      <div class="relative mx-auto w-full max-w-xl lg:max-w-none">
+        <!-- Floating Glass Card (Live Rate) -->
+        <div class="absolute -left-10 top-20 z-30 hidden sm:flex items-center gap-4 rounded-2xl bg-white/70 p-4 backdrop-blur-xl shadow-2xl border border-white/50 animate-[bounce_4s_infinite]">
+          <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-green-400 to-emerald-600 text-white shadow-inner">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" /></svg>
+          </div>
+          <div>
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-widest">Copper Rate</p>
+            <div class="flex items-center gap-2">
+              <p class="text-lg font-extrabold text-slate-900">৳ 720<span class="text-sm text-slate-500">/kg</span></p>
+              <span class="flex items-center text-xs font-bold text-green-600 bg-green-100 px-1.5 py-0.5 rounded">+2.4%</span>
             </div>
+          </div>
         </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 py-12">
-        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div class="text-white font-bold text-lg">BrandLogo</div>
-            <p class="text-sm">&copy; 2026 BrandLogo. All rights reserved.</p>
+        <!-- Floating Glass Card (Success Match) -->
+        <div class="absolute -right-4 bottom-24 z-30 hidden sm:flex items-center gap-3 rounded-2xl bg-white/70 p-4 backdrop-blur-xl shadow-2xl border border-white/50 animate-[bounce_5s_infinite_reverse]">
+          <div class="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 text-blue-600">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          </div>
+          <div>
+            <p class="text-sm font-bold text-slate-900">Buyer Matched!</p>
+            <p class="text-xs font-medium text-slate-500">Payment Escrowed</p>
+          </div>
         </div>
-    </footer>
 
-</body>
-</html>
+        <!-- Device Mockup Container -->
+        <div class="relative z-20 flex justify-center">
+          <!-- Back glowing ring -->
+          <div class="absolute inset-0 bg-gradient-to-tr from-green-300 to-emerald-500 rounded-full blur-3xl opacity-20 transform scale-75"></div>
+          
+          <!-- The Device -->
+          <div class="relative rounded-[2.5rem] bg-slate-900 p-2 shadow-2xl ring-1 ring-slate-900/10 mx-auto max-w-[280px] sm:max-w-[320px] transform transition-transform duration-700 hover:scale-[1.02]">
+            <!-- Screen Area -->
+            <div class="overflow-hidden rounded-[2rem] bg-white relative">
+              <!-- Mockup Dynamic Island / Notch -->
+              <div class="absolute top-2 left-1/2 -translate-x-1/2 w-24 h-6 bg-slate-900 rounded-full z-10 flex items-center justify-between px-2">
+                 <div class="w-2 h-2 rounded-full bg-slate-800"></div>
+                 <div class="w-2 h-2 rounded-full bg-blue-900/50"></div>
+              </div>
+              
+              <!-- App Image -->
+              <img 
+                src="{% static 'images/vangari-app-preview.png' %}" 
+                alt="Vangari App UI" 
+                class="w-full h-auto object-cover transform transition-transform duration-[2s] hover:scale-105"
+              >
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
