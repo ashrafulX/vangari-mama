@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm,AuthenticationForm,PasswordChangeForm ,PasswordResetForm
 from users.models import CustomUser
 import re
 
@@ -131,11 +131,28 @@ class RegisterModelForm(StyleMixin,UserCreationForm):
 class login_form(StyleMixin,AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['username'].label='Email or Username'
         self.fields["username"].widget.attrs.update({
             "class": "w-full px-4 py-3 rounded-lg border border-slate-300 bg-slate-50 text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all duration-200",
-            "placeholder": "Enter your username",
+            "placeholder": "Enter your Email or  Username",
         })
 
         self.fields["password"].widget.attrs.update({
             "class": "w-full px-4 py-3 rounded-lg border border-slate-300 bg-slate-50 text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all duration-200",
             "placeholder": "Enter your password",})
+
+    def clean_username(self):
+        who=self.cleaned_data.get('username')
+
+        try:
+            user=CustomUser.objects.get(email__iexact=who)
+            return user.username
+        except CustomUser.DoesNotExist:
+            return who
+
+
+class CustomePasswordChangeForm(StyleMixin,PasswordChangeForm):
+    pass
+
+class CustomPasswordResetForm(StyleMixin,PasswordResetForm):
+    pass

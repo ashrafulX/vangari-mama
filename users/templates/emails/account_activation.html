@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activate Your Account | Vangari Mama</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; -webkit-font-smoothing: antialiased;">
+
+    <!-- Outer Wrapper -->
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f8fafc; padding: 40px 20px;">
+        <tr>
+            <td align="center">
+                
+                <!-- Main Content Container -->
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); border: 1px solid #e2e8f0;">
+                    
+                    <!-- Header Section -->
+                    <tr>
+                        <td align="center" style="background-color: #0f172a; padding: 40px 20px; border-bottom: 4px solid #10b981;">
+                            <h1 style="margin: 0; color: #ffffff; font-size: 26px; font-weight: 800; letter-spacing: 2px;">
+                                VANGARI <span style="color: #10b981;">MAMA.</span>
+                            </h1>
+                        </td>
+                    </tr>
+
+                    <!-- Body Section -->
+                    <tr>
+                        <td style="padding: 40px 40px 20px 40px;">
+                            <h2 style="margin: 0 0 20px 0; color: #0f172a; font-size: 22px; font-weight: 700;">
+                                Welcome, {{ first_name }}! 👋
+                            </h2>
+                            <p style="margin: 0 0 20px 0; color: #475569; font-size: 16px; line-height: 1.6;">
+                                Thank you for joining <strong>Vangari Mama</strong> — Bangladesh's smartest platform for trading scrap materials. We are thrilled to have you with us!
+                            </p>
+                            <p style="margin: 0 0 35px 0; color: #475569; font-size: 16px; line-height: 1.6;">
+                                To get started and unlock all features, please verify your email address by clicking the button below:
+                            </p>
+
+                            <!-- Call to Action Button -->
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td align="center">
+                                        <a href="{{ activation_url }}" style="display: inline-block; background-color: #14532D; color: #ffffff; font-size: 16px; font-weight: bold; text-decoration: none; padding: 15px 35px; border-radius: 8px; border: 1px solid #14532D;">
+                                            Activate My Account
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Fallback Link -->
+                            <p style="margin: 35px 0 0 0; color: #64748b; font-size: 13px; line-height: 1.5;">
+                                If the button doesn't work, you can copy and paste the following link into your browser:
+                                <br>
+                                <a href="{{ activation_url }}" style="color: #10b981; word-break: break-all; text-decoration: underline;">
+                                    {{ activation_url }}
+                                </a>
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Sign off -->
+                    <tr>
+                        <td style="padding: 0 40px 40px 40px;">
+                            <p style="margin: 0; color: #475569; font-size: 16px; line-height: 1.6;">
+                                Best Regards,<br>
+                                <strong style="color: #0f172a;">The Vangari Mama Team</strong>
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Footer Section -->
+                    <tr>
+                        <td align="center" style="background-color: #f1f5f9; padding: 20px; border-top: 1px solid #e2e8f0;">
+                            <p style="margin: 0 0 5px 0; color: #64748b; font-size: 12px; line-height: 1.5;">
+                                © 2026 Vangari Mama. All rights reserved.
+                            </p>
+                            <p style="margin: 0; color: #94a3b8; font-size: 11px; line-height: 1.5;">
+                                You received this email because you registered on our website. If you didn't make this request, you can safely ignore this email.
+                            </p>
+                        </td>
+                    </tr>
+
+                </table>
+                <!-- End Main Content Container -->
+
+            </td>
+        </tr>
+    </table>
+    <!-- End Outer Wrapper -->
+
+</body>
+</html>

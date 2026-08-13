@@ -1,12 +1,18 @@
 from django.shortcuts import render, redirect
-from users.forms import RegisterModelForm, login_form
+from users.forms import RegisterModelForm, login_form ,CustomePasswordChangeForm,CustomPasswordResetForm
 from django.contrib import messages
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView,PasswordChangeView,PasswordChangeDoneView ,PasswordResetView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import TemplateView
+from users.models import CustomUser
+from django.contrib.auth.tokens import default_token_generator
+from django.http import HttpResponse
+from django.urls import reverse_lazy
+  
 
 # Create your views here.
 
-def home(request):
-    return render(request, 'home.html')
+
 
 
 def sign_up(request):
@@ -31,3 +37,55 @@ class Sign_in(LoginView):
     def get_success_url(self):
         next_url = self.request.GET.get('next')
         return next_url if next_url else super().get_success_url()
+
+
+
+def activate_user(requtest,id,token):
+    try:
+        user=CustomUser.objects.get(id=id)
+        if default_token_generator.check_token(user,token):
+            user.is_active=True
+            user.save()
+            return redirect('sign-in')
+        else:
+            return HttpResponse('Invalid user or Token')
+    except user.DoesNotExist:
+        return HttpResponse('User not Found')
+
+class ProfileView(LoginRequiredMixin,TemplateView):
+    template_name='account/profile.html'
+
+    def get_context_data(self,**kwargs):
+        context=super().get_context_data(**kwargs)
+        user=self.request.user
+        context['username']=user.username
+        context['email']=user.email
+        context['name']=user.get_full_name()
+        context['member_since']=user.date_joined
+        context['last_login']=user.last_login
+        context['address']=user.address
+        context['district']=user.district
+
+        return context
+
+
+
+class ChangePassword(PasswordChangeView):
+    template_name='account/password_change.html'
+    form_class=CustomePasswordChangeForm
+
+
+class CustomPasswordView(PasswordResetView):
+    form_class=CustomPasswordResetForm
+    template_name='registration/reset_password.html'
+    success_url=reverse_lazy('sign-in')
+
+    def get_context_data(self,**kwargs):
+        context=super().get_context_data(**kwargs)
+        context['protocol']='https' if self.request.is_secure() else 'http'
+        context['domain']=self.request.get_host()
+        return context
+
+    def form_valid(self,form):
+        messages.success(self.request,'A Reset Email send! Please Check Your Email')
+        return super().form_valid(form)

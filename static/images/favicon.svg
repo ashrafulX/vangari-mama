@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <!-- Premium Gradient Background -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1A6638"/>
+      <stop offset="100%" stop-color="#0F3D21"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Rounded Square Base (App Icon Style) -->
+  <rect width="512" height="512" rx="128" fill="url(#bgGrad)"/>
+  
+  <!-- The Bold 'V' -->
+  <path d="M160 180 L256 350 L352 180" fill="none" stroke="#FFFFFF" stroke-width="72" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Eco/Green Dot Accent on the Right -->
+  <circle cx="352" cy="180" r="36" fill="#10B981"/>
+</svg>

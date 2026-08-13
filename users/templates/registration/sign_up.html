@@ -16,30 +16,26 @@
 
 <div class="min-h-[90vh] flex items-center justify-center bg-slate-50 relative isolate overflow-hidden py-12 px-4 sm:px-6 lg:px-8">
     <!-- Background Gradients -->
-    <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-green-100/50 via-slate-50 to-slate-50"></div>
-    <div class="absolute top-0 right-0 -z-10 h-[40rem] w-[40rem] -translate-y-1/2 translate-x-1/3 rounded-full bg-emerald-200/40 blur-[100px]"></div>
+    <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-50 via-slate-50 to-green-50"></div>
+    <div class="absolute top-0 right-0 -z-10 h-[30rem] w-[30rem] -translate-y-1/3 translate-x-1/4 rounded-full bg-emerald-200/30 blur-[100px]"></div>
 
     <div class="max-w-5xl w-full bg-white rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col lg:flex-row border border-slate-100">
         
-        <!-- Left Side: Branding / Info -->
-        <div class="lg:w-5/12 bg-gradient-to-br from-[#14532D] to-emerald-800 p-12 text-white flex flex-col justify-between relative overflow-hidden hidden md:flex">
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')] [background-size:24px_24px]"></div>
-            <div class="relative z-10">
-                <h2 class="text-3xl font-extrabold tracking-tight mb-4">Join the Green Revolution.</h2>
-                <p class="text-emerald-100/80 leading-relaxed text-sm">
-                    Create an account to start selling your scrap materials at the best market rates. Instant matching, accurate weight, and guaranteed payments.
-                </p>
-            </div>
-            <div class="relative z-10 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 mt-8">
-                <div class="flex items-center gap-4 mb-3">
-                    <div class="flex -space-x-2">
-                        <div class="h-8 w-8 rounded-full bg-emerald-500 border-2 border-[#14532D]"></div>
-                        <div class="h-8 w-8 rounded-full bg-green-400 border-2 border-[#14532D]"></div>
-                        <div class="h-8 w-8 rounded-full bg-teal-300 border-2 border-[#14532D]"></div>
-                    </div>
-                    <p class="text-sm font-bold">12k+ Active Users</p>
+        <!-- Left Side: Branding (Hidden on mobile) -->
+        <div class="lg:w-5/12 bg-slate-900 p-12 text-white flex flex-col justify-center items-center relative overflow-hidden hidden md:flex text-center">
+            <!-- Glowing background effect inside the dark panel -->
+            <div class="absolute inset-0 bg-gradient-to-br from-green-500/20 to-emerald-500/10 rounded-full blur-3xl transform scale-150"></div>
+            
+            <div class="relative z-10 w-full max-w-xs">
+                <div class="mb-8 mx-auto flex h-20 w-20 items-center justify-center rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-emerald-400">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
+                    </svg>
                 </div>
-                <p class="text-xs text-emerald-200">"Vangari Mama has completely changed how we manage our industrial waste."</p>
+                <h2 class="text-3xl font-extrabold tracking-tight mb-4">Join the Revolution!</h2>
+                <p class="text-slate-300 leading-relaxed text-sm">
+                    Create an account to start selling your scrap materials at the best market rates. Fast, secure, and hassle-free.
+                </p>
             </div>
         </div>
 
@@ -51,7 +47,7 @@
             </div>
 
             <!-- Google Sign Up Button -->
-            <a href="{% provider_login_url 'google' %}" class="w-full flex items-center justify-center gap-3 bg-white border border-slate-200 rounded-xl px-4 py-3.5 text-sm font-bold text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm mb-6 group">
+            <a href="{% provider_login_url 'google' %}" class="w-full flex items-center justify-center gap-3 bg-white border-2 border-slate-100 rounded-xl px-4 py-3.5 text-sm font-bold text-slate-700 hover:bg-slate-50 hover:border-slate-200 transition-all group mb-6">
                 <svg class="h-5 w-5 transition-transform group-hover:scale-110" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                     <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -74,7 +70,7 @@
                 
                 {{ form }}
                 
-                <button type="submit" class="w-full mt-4 flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-8 py-4 text-sm font-bold text-white shadow-[0_0_15px_rgba(16,185,129,0.3)] transition-all hover:-translate-y-0.5 hover:bg-emerald-700 hover:shadow-[0_0_25px_rgba(16,185,129,0.5)]">
+                <button type="submit" class="w-full mt-6 flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-8 py-4 text-sm font-bold text-white shadow-lg shadow-slate-900/20 transition-all hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-slate-900/30">
                     Create My Account
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
@@ -82,6 +78,7 @@
                 </button>
             </form>
         </div>
+        
     </div>
 </div>
 {% endblock content %}
