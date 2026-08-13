@@ -67,6 +67,7 @@ class ProfileView(LoginRequiredMixin,TemplateView):
         context['last_login']=user.last_login
         context['address']=user.address
         context['district']=user.district
+        context['role']=user.role
 
         return context
 
