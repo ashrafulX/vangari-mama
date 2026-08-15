@@ -19,6 +19,7 @@ from django.urls import path,include
 from core.views import home,about_us,contact_us,services
 from django.conf import settings
 from django.conf.urls.static import static
+from debug_toolbar.toolbar import debug_toolbar_urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
@@ -35,7 +36,7 @@ urlpatterns = [
     path('services/',services,name='services'),
 
 
-]
+]+ debug_toolbar_urls()
 urlpatterns += static(
     settings.MEDIA_URL,
     document_root=settings.MEDIA_ROOT

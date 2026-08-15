@@ -9,12 +9,15 @@ from django.contrib.auth.tokens import default_token_generator
 from django.http import HttpResponse
 from django.urls import reverse_lazy
 
-
-  
-
 # Create your views here.
 
+def is_seller(request):
+    return request.user.role=='SELLER'
+def is_buyer(request):
+    return request.user.role=='BUYER'
 
+def is_admin(request):
+    return request.user.groups.filter(name='Admin').exists()
 
 
 def sign_up(request):

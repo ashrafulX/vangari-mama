@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Create Category | Vangari Mama{% endblock title %}
+
+{% block content %}
+<!-- Custom CSS for Form Inputs & Toast Messages -->
+<style>
+  /* Form Field Styling */
+  .django-category-form label { 
+      display: block; 
+      font-size: 0.875rem; 
+      font-weight: 700; 
+      color: #1e293b; 
+      margin-bottom: 0.5rem; 
+  }
+  .django-category-form input[type="text"] { 
+      width: 100%; 
+      padding: 0.875rem 1rem; 
+      border-radius: 0.75rem; 
+      border: 1px solid #e2e8f0; 
+      background-color: #f8fafc; 
+      color: #0f172a; 
+      transition: all 0.3s ease; 
+      font-size: 0.95rem; 
+  }
+  .django-category-form input:focus { 
+      outline: none; 
+      border-color: #10b981; 
+      background-color: #ffffff; 
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15); 
+  }
+  .django-category-form input::placeholder {
+      color: #94a3b8;
+  }
+  
+  /* Help Text and Errors */
+  .django-category-form .helptext { display: block; font-size: 0.75rem; color: #64748b; margin-top: 0.35rem; }
+  .django-category-form ul.errorlist { color: #ef4444; font-size: 0.85rem; font-weight: 500; background: #fef2f2; padding: 0.5rem 1rem; border-radius: 0.5rem; margin-top: 0.5rem; list-style: none; padding-left: 0; }
+
+  /* Toast Messages Animations */
+  @keyframes slideInDown {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .alert-animate { animation: slideInDown 0.4s ease-out; }
+</style>
+
+<div class="min-h-[85vh] flex items-center justify-center bg-slate-50 relative isolate overflow-hidden py-12 px-4 sm:px-6 lg:px-8">
+    
+    <!-- Background Elements -->
+    <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-green-100/50 via-slate-50 to-slate-50"></div>
+    <div class="absolute top-20 right-20 -z-10 h-80 w-80 rounded-full bg-emerald-200/30 blur-[100px]"></div>
+    <div class="absolute bottom-10 left-10 -z-10 h-72 w-72 rounded-full bg-[#14532D]/10 blur-[100px]"></div>
+
+    <!-- Main Content Wrapper -->
+    <div class="max-w-2xl w-full mx-auto relative z-10">
+
+        <!-- Messages / Notifications -->
+        {% if messages %}
+        <div class="mb-6 space-y-3 alert-animate">
+            {% for message in messages %}
+            <div class="flex items-center justify-between p-4 rounded-xl border {% if message.tags == 'error' %}bg-red-50 border-red-200 text-red-800{% elif message.tags == 'success' %}bg-emerald-50 border-emerald-200 text-emerald-900{% else %}bg-blue-50 border-blue-200 text-blue-800{% endif %} shadow-sm">
+                <div class="flex items-center gap-3">
+                    {% if message.tags == 'success' %}
+                        <svg class="w-5 h-5 flex-shrink-0 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                    {% else %}
+                        <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                    {% endif %}
+                    <span class="font-bold text-sm">{{ message }}</span>
+                </div>
+                <button onclick="this.parentElement.remove();" class="opacity-60 hover:opacity-100 transition"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Form Card -->
+        <div class="bg-white/90 backdrop-blur-md rounded-[2rem] shadow-xl overflow-hidden border border-slate-100">
+            
+            <!-- Header Section -->
+            <div class="px-8 py-8 sm:px-12 border-b border-slate-100 flex items-center gap-4 bg-slate-50/50">
+                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#0FA968] shadow-lg shadow-emerald-500/20 flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-7 h-7 text-white">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6z" />
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Create Category</h1>
+                    <p class="text-sm text-slate-500 mt-1">Add a new scrap category to the system.</p>
+                </div>
+            </div>
+
+            <!-- Form Body -->
+            <div class="px-8 py-10 sm:px-12">
+                <form method="post" enctype="multipart/form-data" class="django-category-form">
+                    {% csrf_token %}
+                    
+                    {% if form.non_field_errors %}
+                        <div class="bg-red-50 text-red-700 p-4 rounded-xl mb-6 text-sm font-semibold border border-red-200">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    <div class="space-y-5">
+                        <!-- Manually Rendered Name Field with Placeholder -->
+                        <div>
+                            <label for="{{ form.name.id_for_label }}">
+                                {{ form.name.label }} <span class="text-red-500">*</span>
+                            </label>
+                            
+                            <input type="text" name="{{ form.name.html_name }}" id="{{ form.name.id_for_label }}" 
+                                   value="{% if form.name.value %}{{ form.name.value }}{% endif %}" 
+                                   placeholder="e.g., Plastic, Metal, Paper" 
+                                   required>
+                            
+                            {% if form.name.help_text %}
+                                <span class="helptext">{{ form.name.help_text }}</span>
+                            {% endif %}
+                            
+                            {% if form.name.errors %}
+                                {{ form.name.errors }}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="mt-10 flex flex-col sm:flex-row-reverse gap-4">
+                        <button type="submit" class="group flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-[#0FA968] px-8 py-4 text-base font-bold text-white shadow-lg shadow-emerald-500/30 transition-all hover:-translate-y-0.5 hover:bg-[#0c8e57] hover:shadow-emerald-500/40 focus:ring-4 focus:ring-emerald-200 outline-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 transition-transform group-hover:scale-110">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                            </svg>
+                            Create Category
+                        </button>
+                        
+                        <!-- Update the href to point to your desired page -->
+                        <a href="#" class="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-white border-2 border-slate-200 px-8 py-4 text-base font-bold text-slate-700 transition-all hover:bg-slate-50 hover:border-slate-300 hover:text-slate-900 focus:ring-4 focus:ring-slate-100 outline-none">
+                            Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<!-- Script to auto-hide messages -->
+<script>
+    setTimeout(function() {
+        const alerts = document.querySelectorAll('.alert-animate');
+        alerts.forEach(alert => {
+            alert.style.opacity = '0';
+            alert.style.transform = 'translateY(-20px)';
+            alert.style.transition = 'all 0.4s ease-out';
+            setTimeout(() => alert.remove(), 400);
+        });
+    }, 5000);
+</script>
+{% endblock content %}

@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Create Listing | Vangari Mama{% endblock title %}
+
+{% block content %}
+<div class="min-h-[85vh] flex items-center justify-center bg-slate-50 relative isolate overflow-hidden py-12 px-4 sm:px-6 lg:px-8">
+    
+    <!-- Background Elements -->
+    <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-green-100/50 via-slate-50 to-slate-50"></div>
+    <div class="absolute top-20 right-20 -z-10 h-80 w-80 rounded-full bg-emerald-200/30 blur-[100px]"></div>
+    <div class="absolute bottom-10 left-10 -z-10 h-72 w-72 rounded-full bg-[#14532D]/10 blur-[100px]"></div>
+
+    <!-- Main Content Wrapper -->
+    <div class="max-w-3xl w-full mx-auto relative z-10">
+
+        <!-- Messages / Notifications -->
+        {% if messages %}
+        <div id="toast-container" class="fixed top-24 right-4 z-50 flex flex-col gap-3 w-full max-w-sm">
+            {% for message in messages %}
+            <div class="toast-message flex items-center justify-between p-4 rounded-xl border {% if message.tags == 'error' %}bg-red-50 border-red-200 text-red-800{% elif message.tags == 'success' %}bg-emerald-50 border-emerald-200 text-emerald-900{% else %}bg-blue-50 border-blue-200 text-blue-800{% endif %} shadow-lg transition-all duration-500 ease-out transform translate-x-0 opacity-100">
+                <div class="flex items-center gap-3">
+                    {% if message.tags == 'success' %}
+                        <svg class="w-5 h-5 flex-shrink-0 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                    {% else %}
+                        <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                    {% endif %}
+                    <span class="font-bold text-sm">{{ message }}</span>
+                </div>
+                <button onclick="this.parentElement.remove();" class="opacity-60 hover:opacity-100 transition"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Form Card -->
+        <div class="bg-white/90 backdrop-blur-md rounded-[2rem] shadow-xl overflow-hidden border border-slate-100">
+            
+            <!-- Header Section -->
+            <div class="px-8 py-8 sm:px-12 border-b border-slate-100 flex items-center gap-4 bg-slate-50/50">
+                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#0FA968] shadow-lg shadow-emerald-500/20 flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-7 h-7 text-white">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Create Listing</h1>
+                    <p class="text-sm text-slate-500 mt-1">Add a new scrap item listing to the marketplace.</p>
+                </div>
+            </div>
+
+            <!-- Form Body -->
+            <div class="px-8 py-10 sm:px-12">
+                <form method="post" enctype="multipart/form-data" 
+                      class="[&_label]:block [&_label]:text-sm [&_label]:font-bold [&_label]:text-slate-700 [&_label]:mb-2 
+                             [&_input:not([type=file])]:w-full [&_input:not([type=file])]:px-4 [&_input:not([type=file])]:py-3.5 [&_input:not([type=file])]:rounded-xl [&_input:not([type=file])]:border [&_input:not([type=file])]:border-slate-200 [&_input:not([type=file])]:bg-slate-50 focus:[&_input:not([type=file])]:bg-white focus:[&_input:not([type=file])]:border-[#0FA968] focus:[&_input:not([type=file])]:ring-4 focus:[&_input:not([type=file])]:ring-emerald-100 [&_input:not([type=file])]:outline-none [&_input:not([type=file])]:transition 
+                             [&_select]:w-full [&_select]:px-4 [&_select]:py-3.5 [&_select]:rounded-xl [&_select]:border [&_select]:border-slate-200 [&_select]:bg-slate-50 focus:[&_select]:bg-white focus:[&_select]:border-[#0FA968] focus:[&_select]:ring-4 focus:[&_select]:ring-emerald-100 [&_select]:outline-none [&_select]:transition 
+                             [&_textarea]:w-full [&_textarea]:px-4 [&_textarea]:py-3.5 [&_textarea]:rounded-xl [&_textarea]:border [&_textarea]:border-slate-200 [&_textarea]:bg-slate-50 focus:[&_textarea]:bg-white focus:[&_textarea]:border-[#0FA968] focus:[&_textarea]:ring-4 focus:[&_textarea]:ring-emerald-100 [&_textarea]:outline-none [&_textarea]:transition [&_textarea]:min-h-[120px] 
+                             [&_input[type=file]]:w-full [&_input[type=file]]:p-2.5 [&_input[type=file]]:bg-slate-50 [&_input[type=file]]:border [&_input[type=file]]:border-dashed [&_input[type=file]]:border-slate-300 [&_input[type=file]]:rounded-xl [&_input[type=file]]:text-slate-500 [&_input[type=file]]:file:mr-4 [&_input[type=file]]:file:py-2 [&_input[type=file]]:file:px-4 [&_input[type=file]]:file:rounded-lg [&_input[type=file]]:file:border-0 [&_input[type=file]]:file:text-sm [&_input[type=file]]:file:font-bold [&_input[type=file]]:file:bg-emerald-50 [&_input[type=file]]:file:text-[#0FA968] hover:[&_input[type=file]]:file:bg-emerald-100 [&_input[type=file]]:file:transition 
+                             [&_.helptext]:block [&_.helptext]:text-xs [&_.helptext]:text-slate-500 [&_.helptext]:mt-1.5 
+                             [&_ul.errorlist]:text-red-500 [&_ul.errorlist]:text-sm [&_ul.errorlist]:font-medium [&_ul.errorlist]:bg-red-50 [&_ul.errorlist]:p-3 [&_ul.errorlist]:rounded-lg [&_ul.errorlist]:mt-2 [&_ul.errorlist]:list-none">
+                    
+                    {% csrf_token %}
+                    
+                    {% if form.non_field_errors %}
+                        <div class="bg-red-50 text-red-700 p-4 rounded-xl mb-6 text-sm font-semibold border border-red-200">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    <!-- Responsive Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {% for field in form %}
+                            <div class="{% if field.name == 'title' or field.name == 'description' or field.name == 'image' %}md:col-span-2{% else %}col-span-1{% endif %}">
+                                <label for="{{ field.id_for_label }}">
+                                    {{ field.label }}
+                                    {% if field.field.required %}<span class="text-red-500">*</span>{% endif %}
+                                </label>
+                                
+                                {% if field.name == 'price' %}
+                                    <div class="relative [&_input]:!pr-12">
+                                        {{ field }}
+                                        <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+                                            <span class="text-[#0FA968] font-extrabold text-sm bg-emerald-50 px-2 py-1 rounded-md border border-emerald-100">TK</span>
+                                        </div>
+                                    </div>
+
+                                    {% elif field.name == 'quantity' %}
+                                    <div class="relative [&_input]:!pr-12">
+                                        {{ field }}
+
+                                        <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+                                            <span class="text-[#0FA968] font-extrabold text-sm bg-emerald-50 px-2 py-1 rounded-md border border-emerald-100">KG</span>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    {{ field }}
+                                {% endif %}
+                                
+                                {% if field.help_text %}
+                                    <span class="helptext">{{ field.help_text }}</span>
+                                {% endif %}
+                                
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="mt-10 flex flex-col sm:flex-row-reverse gap-4">
+                        <button type="submit" class="group flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-[#0FA968] px-8 py-4 text-base font-bold text-white shadow-lg shadow-emerald-500/30 transition-all hover:-translate-y-0.5 hover:bg-[#0c8e57] hover:shadow-emerald-500/40 focus:ring-4 focus:ring-emerald-200 outline-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5 transition-transform group-hover:scale-110">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                            </svg>
+                            Create Listing
+                        </button>
+                        
+                        <a href="javascript:history.back()" class="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-white border-2 border-slate-200 px-8 py-4 text-base font-bold text-slate-700 transition-all hover:bg-slate-50 hover:border-slate-300 hover:text-slate-900 focus:ring-4 focus:ring-slate-100 outline-none">
+                            Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+            const toasts = document.querySelectorAll('.toast-message');
+            toasts.forEach(toast => {
+                toast.classList.remove('translate-x-0', 'opacity-100');
+                toast.classList.add('translate-x-10', 'opacity-0');
+                setTimeout(() => toast.remove(), 500);
+            });
+        }, 5000);
+    });
+</script>
+{% endblock content %}

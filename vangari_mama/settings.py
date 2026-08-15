@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
 ]
+if DEBUG:
+    INSTALLED_APPS+=["debug_toolbar"]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -60,6 +62,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
 ]
+if DEBUG:
+    MIDDLEWARE+=["debug_toolbar.middleware.DebugToolbarMiddleware"]
+    INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+    ]
 
 
 AUTHENTICATION_BACKENDS = [
