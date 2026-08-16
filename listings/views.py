@@ -6,6 +6,7 @@ from listings.models import Category,Listing
 from django.contrib import messages
 from django.urls import reverse_lazy
 from users.views import is_seller,is_buyer,is_admin
+from django.db.models import Q
 # Create your views here.
 
 
@@ -98,3 +99,29 @@ class MarketPlaceView(ListView):
     template_name='marketplace.html'
     context_object_name='lists'
     paginate_by = 10
+
+    def get_queryset(self):
+        queryset=Listing.objects.prefetch_related('category').filter(status='AVAILABLE').order_by('-created_at')
+        search=self.request.GET.get('q')
+
+        if search:
+            print(search)
+            queryset=queryset.filter(Q(title__icontains=search) | Q(description__icontains=search) | Q(category__name__icontains=search))
+
+        category_search=self.request.GET.get('category')
+        if category_search:
+            queryset=queryset.filter(category__name__icontains=category_search)
+
+        return queryset
+
+    def get_context_data(self,**kwargs):
+        context=super().get_context_data(**kwargs)
+        context['categories']=Category.objects.all()
+        context['current_category'] = self.request.GET.get('category', '')
+        return context
+
+class DetailView(CreateView):
+    model=Listing
+    template_name='list_details.html'
+    fields='__all__'
+    pk_url_kwarg = 'id'

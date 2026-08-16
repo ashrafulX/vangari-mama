@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Marketplace | Vangari Mama{% endblock title %}
+
+{% block content %}
+<div class="min-h-screen bg-slate-50 relative isolate py-12 px-4 sm:px-6 lg:px-8">
+    
+    <!-- Background Elements -->
+    <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-green-100/50 via-slate-50 to-slate-50"></div>
+    <div class="absolute top-0 right-0 -z-10 h-[500px] w-[500px] rounded-full bg-emerald-200/20 blur-[120px]"></div>
+    <div class="absolute bottom-0 left-0 -z-10 h-[500px] w-[500px] rounded-full bg-[#14532D]/5 blur-[120px]"></div>
+
+    <div class="max-w-7xl mx-auto">
+        
+        <!-- Header & Search Section -->
+        <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div>
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Marketplace</h1>
+                <p class="text-slate-500 mt-2 text-sm sm:text-base max-w-xl">
+                    Discover and trade available scrap items. Connect with buyers and sellers instantly.
+                </p>
+            </div>
+            
+            <!-- Search Bar -->
+            <div class="w-full md:max-w-md">
+                <form method="get" class="relative flex items-center">
+                    <!-- Preserve category when searching -->
+                    {% if current_category %}
+                        <input type="hidden" name="category" value="{{ current_category }}">
+                    {% endif %}
+                    
+                    <div class="absolute left-4 text-slate-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                        </svg>
+                    </div>
+                    <input type="text" name="q" value="{{ current_search }}" placeholder="Search items..." 
+                           class="w-full pl-11 pr-24 py-3.5 rounded-xl border border-slate-200 bg-white shadow-sm focus:border-[#0FA968] focus:ring-4 focus:ring-emerald-100 outline-none transition text-sm font-medium text-slate-700 placeholder-slate-400">
+                    <button type="submit" class="absolute right-2 px-4 py-2 bg-[#0FA968] text-white text-sm font-bold rounded-lg hover:bg-[#0c8e57] transition shadow-sm">
+                        Search
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Category Filters -->
+        <div class="mb-10 flex gap-3 overflow-x-auto pb-4 scrollbar-hide snap-x">
+            <!-- 'All' Badge -->
+            <a href="?{% if current_search %}q={{ current_search }}{% endif %}" 
+               class="snap-start whitespace-nowrap px-5 py-2.5 rounded-xl text-sm font-bold transition-all border shadow-sm {% if not current_category %}bg-[#0FA968] text-white border-transparent shadow-emerald-500/30{% else %}bg-white text-slate-600 border-slate-200 hover:bg-slate-50{% endif %}">
+                All Items
+            </a>
+            
+            <!-- Dynamic Categories -->
+            {% for cat in categories %}
+                <a href="?category={{ cat.name }}{% if current_search %}&q={{ current_search }}{% endif %}" 
+                   class="snap-start whitespace-nowrap px-5 py-2.5 rounded-xl text-sm font-bold transition-all border shadow-sm {% if current_category == cat.name %}bg-[#0FA968] text-white border-transparent shadow-emerald-500/30{% else %}bg-white text-slate-600 border-slate-200 hover:bg-slate-50{% endif %}">
+                    {{ cat.name }}
+                </a>
+            {% endfor %}
+        </div>
+
+        <!-- Grid Cards Section -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8">
+            {% for list in lists %}
+                <!-- Single Card -->
+                <div class="group bg-white rounded-3xl shadow-sm hover:shadow-xl hover:shadow-emerald-900/5 transition-all duration-300 border border-slate-100 overflow-hidden flex flex-col hover:-translate-y-1 relative">
+                    
+                    <!-- Image Area -->
+                    <div class="relative h-48 w-full bg-slate-100 overflow-hidden">
+                        {% if list.image %}
+                            <img src="{{ list.image.url }}" alt="{{ list.title }}" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        {% else %}
+                            <div class="h-full w-full flex items-center justify-center bg-emerald-50 text-emerald-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                                </svg>
+                            </div>
+                        {% endif %}
+                        
+                        <!-- Category Badge Overlay -->
+                        <div class="absolute top-3 left-3">
+                            {% if list.category %}
+                                <span class="px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm text-[10px] font-black uppercase tracking-wider text-slate-800 shadow-sm">
+                                    {{ list.category.name|default:list.category }}
+                                </span>
+                            {% endif %}
+                        </div>
+
+                        <!-- Status Badge Top Right -->
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2.5 py-1 rounded-full bg-[#0FA968] text-white text-[10px] font-bold uppercase tracking-wider shadow-sm flex items-center gap-1">
+                                <span class="h-1.5 w-1.5 rounded-full bg-white animate-pulse"></span>
+                                Available
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Content Area -->
+                    <div class="p-5 flex flex-col flex-1">
+                        
+                        <!-- Title -->
+                        <h3 class="text-lg font-extrabold text-slate-900 mb-1 line-clamp-1" title="{{ list.title }}">
+                            {{ list.title }}
+                        </h3>
+                        
+                        <!-- Description Preview -->
+                        <p class="text-sm text-slate-500 line-clamp-2 mb-4 flex-1">
+                            {{ list.description|default:"No description provided for this item." }}
+                        </p>
+
+                        <!-- Price & Quantity -->
+                        <div class="flex items-center justify-between py-3 border-t border-slate-100 mb-4">
+                            <div class="flex flex-col">
+                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Price</span>
+                                <span class="text-lg font-black text-[#0FA968]">{{ list.price }} TK</span>
+                            </div>
+                            <div class="flex flex-col items-end">
+                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Quantity</span>
+                                <span class="text-base font-bold text-slate-700">{{ list.quantity }} KG</span>
+                            </div>
+                        </div>
+
+                        <!-- Action Button -->
+                        <!-- Update href with your details URL -->
+                        <a href="{% url "view-details" list.id %}" class="mt-auto flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-slate-900 text-white text-sm font-bold transition-all hover:bg-[#0FA968] shadow-md hover:shadow-emerald-500/30">
+                            View Details
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            
+            <!-- Empty State -->
+            {% empty %}
+                <div class="col-span-full py-20 flex flex-col items-center justify-center text-center">
+                    <div class="h-24 w-24 bg-white shadow-sm border border-slate-100 rounded-full flex items-center justify-center mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-slate-400">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2">No Items Found</h3>
+                    <p class="text-slate-500 max-w-md">We couldn't find any items matching your criteria. Try adjusting your search or filters.</p>
+                    <a href="{% url 'marketplace' %}" class="mt-6 px-6 py-3 bg-[#0FA968] text-white font-bold rounded-xl hover:bg-[#0c8e57] shadow-lg shadow-emerald-500/30 transition-all">Clear Filters</a>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination Section (Maintained state with URL Params) -->
+        {% if is_paginated %}
+        <div class="mt-14 flex items-center justify-center">
+            <nav class="inline-flex items-center justify-center gap-2 rounded-2xl bg-white p-2 shadow-sm border border-slate-100">
+                
+                <!-- Previous Button -->
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}{% if current_search %}&q={{ current_search }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}" class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-slate-50 text-slate-500 transition hover:bg-[#0FA968] hover:text-white">
+                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" /></svg>
+                    </a>
+                {% else %}
+                    <span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-slate-50 opacity-50 cursor-not-allowed text-slate-400">
+                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" /></svg>
+                    </span>
+                {% endif %}
+
+                <!-- Page Numbers -->
+                <div class="hidden sm:flex gap-1 px-2">
+                    {% for i in paginator.page_range %}
+                        {% if page_obj.number == i %}
+                            <span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#0FA968] text-sm font-bold text-white shadow-md shadow-emerald-500/30">
+                                {{ i }}
+                            </span>
+                        {% else %}
+                            <a href="?page={{ i }}{% if current_search %}&q={{ current_search }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}" class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-transparent text-sm font-bold text-slate-600 transition hover:bg-slate-100">
+                                {{ i }}
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                
+                <!-- Mobile Current Page Info -->
+                <span class="sm:hidden text-sm font-bold text-slate-700 px-4">
+                    Page {{ page_obj.number }} of {{ paginator.num_pages }}
+                </span>
+
+                <!-- Next Button -->
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}{% if current_search %}&q={{ current_search }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}" class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-slate-50 text-slate-500 transition hover:bg-[#0FA968] hover:text-white">
+                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" /></svg>
+                    </a>
+                {% else %}
+                    <span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-slate-50 opacity-50 cursor-not-allowed text-slate-400">
+                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" /></svg>
+                    </span>
+                {% endif %}
+                
+            </nav>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+
+<!-- Extra styling to hide scrollbar but keep functionality for Category Pills -->
+<style>
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+</style>
+{% endblock content %}
