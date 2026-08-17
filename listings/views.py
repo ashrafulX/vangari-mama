@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from listings.forms import CreateCategoryModelForm,ListingCreateModelForm
-from django.views.generic import CreateView , UpdateView , DeleteView , ListView
+from django.views.generic import CreateView , UpdateView , DeleteView , ListView ,DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from listings.models import Category,Listing
 from django.contrib import messages
@@ -120,8 +120,21 @@ class MarketPlaceView(ListView):
         context['current_category'] = self.request.GET.get('category', '')
         return context
 
-class DetailView(CreateView):
+class DetailView(DetailView):
     model=Listing
     template_name='list_details.html'
     fields='__all__'
     pk_url_kwarg = 'id'
+
+    def get_context_data(self,**kwargs):
+        context=super().get_context_data(**kwargs)
+        context['totalprice']=self.object.price * self.object.quantity
+        return context
+
+
+
+def detailview(request,id):
+    object=Listing.objects.get(id=id)
+    return render(request,'list_details.html',{'object':object})
+
+

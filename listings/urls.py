@@ -1,5 +1,5 @@
 from django.urls import path,include
-from listings.views import CreateCategoryView,ListingCreateView,Edit_listing,EditListingView,MarketPlaceView,DetailView
+from listings.views import CreateCategoryView,ListingCreateView,Edit_listing,EditListingView,MarketPlaceView,DetailView ,detailview
 urlpatterns = [
     path('create-category/',CreateCategoryView.as_view(),name='create-category'),
     path('listing/',ListingCreateView.as_view(),name='listing'),

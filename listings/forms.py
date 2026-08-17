@@ -15,7 +15,4 @@ class ListingCreateModelForm(StyleMixin, forms.ModelForm):
     class Meta:
         model = Listing
         fields = ['title', 'description', 'price', 'quantity', 'image', 'category','status']
-        labels = {
-            'price': 'Price (TK)',
-            'quantity': 'Quantity (KG)',
-        }
+

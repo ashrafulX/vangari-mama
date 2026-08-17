@@ -20,6 +20,9 @@ from core.views import home,about_us,contact_us,services
 from django.conf import settings
 from django.conf.urls.static import static
 from debug_toolbar.toolbar import debug_toolbar_urls
+
+handler404 = 'core.views.custom_404'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
