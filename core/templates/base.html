@@ -25,6 +25,10 @@
             <!-- Desktop Navigation (Center) -->
             <div class="hidden md:flex items-center justify-center flex-1 px-8">
                 <div class="flex space-x-2 lg:space-x-6">
+                    <a href="{% url "home" %}" class="relative px-2 py-2 text-sm font-bold text-gray-200 transition-colors hover:text-white group">
+                        HOME
+                        <span class="absolute inset-x-2 -bottom-1 h-0.5 bg-green-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></span>
+                    </a>
                     {% if user.is_authenticated %} 
                     <a href="#" class="relative px-2 py-2 text-sm font-bold text-gray-200 transition-colors hover:text-white group">
                         DASHBOARD
@@ -35,10 +39,7 @@
                         MARKETPLACE
                         <span class="absolute inset-x-2 -bottom-1 h-0.5 bg-green-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></span>
                     </a>
-                    <a href="{% url "home" %}" class="relative px-2 py-2 text-sm font-bold text-gray-200 transition-colors hover:text-white group">
-                        HOME
-                        <span class="absolute inset-x-2 -bottom-1 h-0.5 bg-green-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></span>
-                    </a>
+                    
                     <a href="{% url "services" %}" class="relative px-2 py-2 text-sm font-bold text-gray-200 transition-colors hover:text-white group">
                         SERVICES
                         <span class="absolute inset-x-2 -bottom-1 h-0.5 bg-green-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></span>

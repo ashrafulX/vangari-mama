@@ -28,7 +28,7 @@ class CreateCategoryView(LoginRequiredMixin,UserPassesTestMixin,CreateView):
 class ListingCreateView(LoginRequiredMixin,UserPassesTestMixin,CreateView):
     model=Listing
     template_name='create_listing.html'
-    fields=['title','description','price','quantity','image','category']
+    fields=['title','description','price','quantity','image','category',]
     success_url=reverse_lazy('profile')
 
     def test_func(self):
@@ -123,12 +123,13 @@ class MarketPlaceView(ListView):
 class DetailView(DetailView):
     model=Listing
     template_name='list_details.html'
-    fields='__all__'
     pk_url_kwarg = 'id'
 
     def get_context_data(self,**kwargs):
         context=super().get_context_data(**kwargs)
         context['totalprice']=self.object.price * self.object.quantity
+        context['address']=self.object.seller.address
+        context['phone']=self.object.seller.phone
         return context
 
 

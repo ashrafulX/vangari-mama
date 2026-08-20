@@ -110,6 +110,20 @@
                                 {{ object.description|default:"No description provided for this listing."|linebreaks }}
                             </div>
                         </div>
+                        
+
+                         <div class="mb-10">
+                            <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                                <span class="h-px w-6 bg-slate-200"></span> Address
+                            </h2>
+                            <div class="text-slate-600 leading-relaxed bg-slate-50/70 p-5 rounded-2xl border border-slate-100 text-sm sm:text-base">
+                                {{ address|default:"No Address provided for this seller."|linebreaks }}
+                               <h2 class="mt-6 text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                                <span class="h-px w-6 bg-slate-200"></span> Phone
+                            </h2>
+                                {{phone}}
+                            </div>
+                        </div>
                     </div>
 
                     <!-- ========================================== -->
@@ -128,12 +142,12 @@
                             </div>
                             
                             <!-- TODO: Replace with actual Buy form -->
-                            <button type="button" class="group w-full inline-flex items-center justify-center gap-2 rounded-xl bg-[#0FA968] px-6 py-4 text-sm font-bold text-white shadow-lg shadow-emerald-500/25 transition-all hover:bg-[#0c8e57] hover:-translate-y-0.5 outline-none">
+                            <a  href="{% url "buy-item" object.id %}" class="group w-full inline-flex items-center justify-center gap-2 rounded-xl bg-[#0FA968] px-6 py-4 text-sm font-bold text-white shadow-lg shadow-emerald-500/25 transition-all hover:bg-[#0c8e57] hover:-translate-y-0.5 outline-none">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 transition-transform group-hover:scale-110">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                                 </svg>
                                 Proceed to Buy
-                            </button>
+                            </a>
                         </div>
 
                         <!-- 2. Bidding / Offer Form -->
