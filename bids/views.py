@@ -78,7 +78,7 @@ def biddingview(request):
     if not is_buyer(request):
         return render(request,'error/no_permission.html')
 
-    bids=Offer.objects.filter(buyer=request.user).order_by('-created_at')
+    bids = Offer.objects.select_related('listing','listing__seller').filter(buyer=request.user).order_by('-created_at')
 
     return render(request,'bid/bidding_list.html',{'bids':bids})
 
@@ -88,5 +88,5 @@ def offers(request):
     if not is_seller(request):
         return render(request,'error/no_permission.html')
 
-    bids=Offer.objects.filter(listing__seller=request.user).order_by('-created_at')
+    bids=Offer.objects.select_related('listing','buyer').filter(listing__seller=request.user).order_by('-created_at')
     return render(request,'bid/offer_list.html',{'bids':bids})
