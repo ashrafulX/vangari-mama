@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}My Bids | Vangari Mama{% endblock title %}
+
+{% block content %}
+<div class="min-h-screen bg-slate-50 relative isolate py-12 px-4 sm:px-6 lg:px-8">
+    
+    <!-- Background Elements -->
+    <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-green-100/40 via-slate-50 to-slate-50"></div>
+    <div class="absolute top-0 right-0 -z-10 h-[500px] w-[500px] rounded-full bg-emerald-200/20 blur-[120px]"></div>
+    <div class="absolute bottom-0 left-0 -z-10 h-[500px] w-[500px] rounded-full bg-blue-200/10 blur-[120px]"></div>
+
+    <div class="max-w-[1200px] mx-auto">
+        
+        <!-- Header Section -->
+        <div class="mb-10 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div>
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">My Bids & Offers</h1>
+                <p class="text-slate-500 mt-2 text-sm sm:text-base max-w-xl">
+                    Track all the price offers you've submitted to sellers. See which ones are accepted, pending, or declined.
+                </p>
+            </div>
+            
+            <div class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-slate-200 shadow-sm text-sm font-bold text-slate-700 shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 text-blue-500">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Bidding History
+            </div>
+        </div>
+
+        <!-- Bids List -->
+        <div class="space-y-4">
+            {% for bid in bids %}
+                <!-- Single Bid Row -->
+                <div class="group bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-slate-200 p-4 sm:p-5 flex flex-col lg:flex-row lg:items-center gap-5 relative overflow-hidden">
+                    
+                    <!-- Dynamic Status Indicator Line -->
+                    {% if bid.status|lower == 'pending' %}
+                        <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-amber-400"></div>
+                    {% elif bid.status|lower == 'accepted' %}
+                        <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-[#0FA968]"></div>
+                    {% elif bid.status|lower == 'rejected' %}
+                        <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-rose-500"></div>
+                    {% else %}
+                        <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-slate-300"></div>
+                    {% endif %}
+
+                    <!-- 1. Listing Info Area -->
+                    <div class="flex items-center gap-4 flex-1 min-w-[250px] pl-2">
+                        <!-- Listing Image -->
+                        <div class="h-16 w-16 sm:h-20 sm:w-20 rounded-xl bg-slate-100 overflow-hidden border border-slate-200 shrink-0">
+                            {% if bid.listing.image %}
+                                <img src="{{ bid.listing.image.url }}" alt="{{ bid.listing.title }}" class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            {% else %}
+                                <div class="h-full w-full flex items-center justify-center bg-slate-50 text-slate-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                                    </svg>
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Listing Details -->
+                        <div class="min-w-0 flex-1">
+                            <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block mb-1">
+                                Placed on {{ bid.created_at|date:"M d, Y" }}
+                            </span>
+                            <h3 class="text-base sm:text-lg font-bold text-slate-900 truncate" title="{{ bid.listing.title }}">
+                                {{ bid.listing.title }}
+                            </h3>
+                            <p class="text-xs sm:text-sm font-medium text-slate-500 mt-1">
+                                Seller: <span class="font-bold text-slate-700">{{ bid.listing.seller.username }}</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Divider (Hidden on small screens) -->
+                    <div class="hidden lg:block w-px h-12 bg-slate-200 shrink-0"></div>
+                    <hr class="block lg:hidden border-slate-100">
+
+                    <!-- 2. Pricing Comparison Area -->
+                    <div class="flex items-center justify-between lg:justify-center gap-6 sm:gap-10 w-full lg:w-auto shrink-0">
+                        
+                        <!-- Asking Price (Strikethrough styling to show negotiation) -->
+                        <div class="text-left">
+                            <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block mb-1">Asking Price</span>
+                            <p class="text-sm sm:text-base font-bold text-slate-400 line-through decoration-slate-300">{{ bid.listing.price }} TK</p>
+                        </div>
+                        
+                        <!-- Arrow Icon -->
+                        <div class="hidden sm:flex text-slate-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                            </svg>
+                        </div>
+
+                        <!-- Offered Price -->
+                        <div class="text-right lg:text-left">
+                            <span class="text-[10px] font-extrabold text-blue-600 uppercase tracking-widest block mb-1">My Offer</span>
+                            <p class="text-xl sm:text-2xl font-black text-blue-600 leading-none">{{ bid.price }} TK</p>
+                        </div>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="hidden lg:block w-px h-12 bg-slate-200 shrink-0"></div>
+
+                    <!-- 3. Status & Action Area -->
+                    <div class="flex items-center justify-between lg:justify-end gap-4 w-full lg:w-auto shrink-0 mt-2 lg:mt-0 pt-4 lg:pt-0 border-t lg:border-none border-slate-100">
+                        
+                        <!-- Status Badge -->
+                        <div>
+                            {% if bid.status|lower == 'pending' %}
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider bg-amber-50 text-amber-700 border border-amber-200 shadow-sm">
+                                    <span class="h-1.5 w-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                                    Pending
+                                </span>
+                            {% elif bid.status|lower == 'accepted' %}
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-sm">
+                                    <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                                    Accepted
+                                </span>
+                            {% elif bid.status|lower == 'rejected' %}
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider bg-rose-50 text-rose-700 border border-rose-200 shadow-sm">
+                                    <span class="h-1.5 w-1.5 rounded-full bg-rose-500"></span>
+                                    Declined
+                                </span>
+                            {% else %}
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider bg-slate-100 text-slate-700 border border-slate-200 shadow-sm">
+                                    {{ bid.get_status_display|default:bid.status }}
+                                </span>
+                            {% endif %}
+                        </div>
+
+                        <!-- View Listing Button -->
+            
+                        <a href="{% url "view-details" bid.listing.id %}" class="px-5 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-bold hover:bg-slate-800 transition shadow-md shadow-slate-900/20 whitespace-nowrap">
+                            View Listing
+                        </a>
+                    </div>
+
+                </div>
+            
+            {% empty %}
+                <!-- Empty State -->
+                <div class="py-24 flex flex-col items-center justify-center text-center bg-white/80 backdrop-blur-sm rounded-3xl border border-slate-200 shadow-sm">
+                    <div class="h-20 w-20 bg-slate-50 rounded-full flex items-center justify-center mb-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-slate-300">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">No Bids Placed Yet</h3>
+                    <p class="text-slate-500 text-sm max-w-sm">You haven't made any offers on scrap items yet. Explore the marketplace to find great deals.</p>
+                    <a href="{% url 'marketplace' %}" class="mt-6 px-6 py-3 bg-[#0FA968] text-white font-bold rounded-xl hover:bg-[#0c8e57] shadow-lg shadow-emerald-500/30 transition-all">
+                        Browse Marketplace
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+{% endblock content %}
