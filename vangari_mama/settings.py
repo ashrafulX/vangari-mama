@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'listings',
     'bids',
     'orders',
+    'notifications',
     'reviews',
     'allauth',
     'allauth.account',
