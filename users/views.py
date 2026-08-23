@@ -12,6 +12,8 @@ from listings.models import Listing,Category
 from orders.models import Order
 from bids.models import Offer
 from allauth.socialaccount.models import SocialAccount
+from django.core.paginator import Paginator
+
 # Create your views here.
 
 def is_seller(request):
@@ -46,12 +48,35 @@ def dashboard(request):
 
         return render( request, 'dashboard/admin_dashboard.html',context)
     
+    # elif is_seller(request):
+    #     listing=Listing.objects.select_related('seller','category').filter(seller=request.user).order_by('-created_at')
+       
+    #     paginator = Paginator(listing, 8)
+
+    #     page_number = request.GET.get('page')
+    #     seller_listings = paginator.get_page(page_number)
+    #     context={
+    #                 'seller_listings':listing,
+    #             }
+    #     return render(request,'dashboard/seller_dashboard.html',context)
+
     elif is_seller(request):
-        listing=Listing.objects.select_related('seller','category').filter(seller=request.user).order_by('-created_at')
-        context={
-            'seller_listings':listing,
+        listing = Listing.objects.select_related(
+            'seller', 'category'
+        ).filter(
+            seller=request.user
+        ).order_by('-created_at')
+
+        paginator = Paginator(listing, 5)
+
+        page_number = request.GET.get('page')
+        seller_listings = paginator.get_page(page_number)
+
+        context = {
+            'seller_listings': seller_listings,
         }
-        return render(request,'dashboard/seller_dashboard.html',context)
+
+        return render( request,'dashboard/seller_dashboard.html',context)
     
     elif is_buyer(request):
         recent_purchases=Order.objects.select_related('buyer','seller','listing').filter(buyer=request.user).order_by('-created_at')[:5]

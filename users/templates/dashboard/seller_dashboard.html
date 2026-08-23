@@ -101,7 +101,8 @@
                 <!-- TODO: Change 'seller_listings' to the context variable you are passing from views.py -->
                 {% for item in seller_listings %}
                     <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
-                        
+
+
                         <!-- Listing Info -->
                         <div class="flex items-center gap-4 flex-1">
                             <!-- Image -->
@@ -173,6 +174,30 @@
                     </div>
                 {% endfor %}
             </div>
+
+            <!-- Pagination Section -->
+            {% if seller_listings.has_other_pages %}
+            <div class="mt-10 flex items-center justify-center">
+                <nav class="inline-flex items-center justify-center gap-2 rounded-2xl bg-white p-2 shadow-sm border border-slate-100">
+                    {% if seller_listings.has_previous %}
+                        <a href="?page={{ seller_listings.previous_page_number }}" class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-slate-50 text-slate-500 transition hover:bg-[#0FA968] hover:text-white">
+                            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" /></svg>
+                        </a>
+                    {% endif %}
+
+                    <span class="text-sm font-bold text-slate-700 px-4">
+                        Page {{ seller_listings.number }} of {{ seller_listings.paginator.num_pages }}
+                    </span>
+
+                    {% if seller_listings.has_next %}
+                        <a href="?page={{ seller_listings.next_page_number }}" class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-slate-50 text-slate-500 transition hover:bg-[#0FA968] hover:text-white">
+                            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" /></svg>
+                        </a>
+                    {% endif %}
+                </nav>
+            </div>
+            {% endif %}
+
         </div>
 
     </div>
