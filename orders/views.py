@@ -112,7 +112,7 @@ class OrderDetailView(LoginRequiredMixin,UserPassesTestMixin,DetailView):
 
 class OrdersView(LoginRequiredMixin,UserPassesTestMixin,ListView):
     model=Order
-    paginate_by = 10
+    paginate_by = 5
     template_name='orders.html'
     context_object_name='orders'
 

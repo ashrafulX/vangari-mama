@@ -8,3 +8,5 @@ urlpatterns = [
     path('my-bids/',biddingview,name='my-bids'),
     path('my-offers/',offers,name='offers'),
 ]
+
+

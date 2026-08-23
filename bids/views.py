@@ -64,7 +64,7 @@ def accept_offer(request,id):
         message=f"Your Offer for{offer.listing.title} has been Accepted!",
         link=f"listings/view-details/{offer.listing.id}/"
     )
-    return redirect('review-offer') #dashboard
+    return redirect('dashboard') #dashboard
 
 
 @login_required
@@ -84,7 +84,7 @@ def reject_offer(request,id):
             message=f"Your Offer for{offer.listing.title} has been Rejected!",
             link=f"listings/view-details/{offer.listing.id}/"
         )
-    return redirect('review-offer') #dashboard
+    return redirect('dashboard') #dashboard
 
 
 @login_required

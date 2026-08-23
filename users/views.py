@@ -8,7 +8,10 @@ from users.models import CustomUser
 from django.contrib.auth.tokens import default_token_generator
 from django.http import HttpResponse
 from django.urls import reverse_lazy
-
+from listings.models import Listing,Category
+from orders.models import Order
+from bids.models import Offer
+from allauth.socialaccount.models import SocialAccount
 # Create your views here.
 
 def is_seller(request):
@@ -18,6 +21,48 @@ def is_buyer(request):
 
 def is_admin(request):
     return request.user.groups.filter(name='Admin').exists()
+""" 
+
+"""
+
+def dashboard(request):
+
+    if request.user.groups.filter(name='Admin').exists():
+
+        users = CustomUser.objects.all().order_by('-date_joined')
+        listings = Listing.objects.select_related('seller', 'category').all().order_by('-created_at')
+        categories = Category.objects.all().order_by('name')
+        offers = Offer.objects.select_related( 'buyer', 'listing', 'listing__seller').all().order_by('-created_at')
+        orders = Order.objects.select_related('buyer', 'seller', 'listing').all().order_by('-created_at')
+        social_accounts = SocialAccount.objects.select_related( 'user').all()
+        context = {
+            'users': users,
+            'listings': listings,
+            'categories': categories,
+            'offers': offers,
+            'orders': orders,
+            'social_accounts': social_accounts,
+        }
+
+        return render( request, 'dashboard/admin_dashboard.html',context)
+    
+    elif is_seller(request):
+        listing=Listing.objects.select_related('seller','category').filter(seller=request.user).order_by('-created_at')
+        context={
+            'seller_listings':listing,
+        }
+        return render(request,'dashboard/seller_dashboard.html',context)
+    
+    elif is_buyer(request):
+        recent_purchases=Order.objects.select_related('buyer','seller','listing').filter(buyer=request.user).order_by('-created_at')[:5]
+
+        context={
+            'recent_purchases':recent_purchases,
+        }
+        return render(request,'dashboard/buyer_dashboard.html',context)
+    
+    else:
+        return render(request,'error/no_permission.html')
 
 
 def sign_up(request):

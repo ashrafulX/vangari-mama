@@ -15,7 +15,7 @@ class CreateCategoryView(LoginRequiredMixin,UserPassesTestMixin,CreateView):
     model=Category
     template_name='create_category.html'
     fields=['name']
-    success_url=reverse_lazy('create-category')
+    success_url=reverse_lazy('dashboard')
 
     def test_func(self):
         return is_admin(self.request)
@@ -24,6 +24,13 @@ class CreateCategoryView(LoginRequiredMixin,UserPassesTestMixin,CreateView):
     def form_valid(self,form):
         messages.success(self.request,'Category Created Succesfully!')
         return super().form_valid(form)
+
+
+def deletecategory(request,id):
+    cat=Category.objects.get(id=id)
+    if cat:
+        cat.delete()
+    return redirect('dashboard')
 
 class ListingCreateView(LoginRequiredMixin,UserPassesTestMixin,CreateView):
     model=Listing
@@ -124,6 +131,11 @@ class DetailView(DetailView):
     model=Listing
     template_name='list_details.html'
     pk_url_kwarg = 'id'
+
+    def get_queryset(self):
+        queryset=Listing.objects.select_related('seller')
+        return queryset
+    
 
     def get_context_data(self,**kwargs):
         context=super().get_context_data(**kwargs)

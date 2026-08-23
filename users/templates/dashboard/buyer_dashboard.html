@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Buyer Dashboard | Vangari Mama{% endblock title %}
+
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="min-h-screen bg-slate-50 relative isolate py-12 px-4 sm:px-6 lg:px-8">
+    
+    <!-- Background Elements -->
+    <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-100/40 via-slate-50 to-slate-50"></div>
+    <div class="absolute top-0 right-0 -z-10 h-[500px] w-[500px] rounded-full bg-blue-200/20 blur-[120px]"></div>
+
+    <div class="max-w-7xl mx-auto">
+        
+        <!-- Header & Quick Actions -->
+        <div class="mb-10 flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+            <div>
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Buyer Dashboard</h1>
+                <p class="text-slate-500 mt-2 text-sm sm:text-base max-w-xl">
+                    Review your scrap purchases, monitor your spending habits, and manage your active bids.
+                </p>
+            </div>
+            
+            <!-- Quick Action Buttons -->
+            <div class="flex flex-wrap items-center gap-3">
+                <!-- TODO: If you have a marketplace url, replace 'marketplace' with your actual url name -->
+                <a href="{% url "marketplace" %}" class="px-4 py-2 rounded-xl bg-[#0FA968] text-white shadow-sm shadow-emerald-500/30 text-sm font-bold hover:bg-[#0c8e57] transition flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                    Marketplace
+                </a>
+                <a href="{% url 'my-bids' %}" class="px-4 py-2 rounded-xl bg-amber-50 border border-amber-200 shadow-sm text-sm font-bold text-amber-700 hover:bg-amber-100 transition flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                    My Bids
+                </a>
+                <a href="{% url 'orders-view' %}" class="px-4 py-2 rounded-xl bg-slate-900 text-white shadow-sm text-sm font-bold hover:bg-slate-800 transition flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
+                    My Orders
+                </a>
+            </div>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <!-- Total Items Bought -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm relative overflow-hidden">
+                <div class="absolute right-0 top-0 h-full w-2 bg-blue-500"></div>
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Items Bought</p>
+                <h3 class="text-3xl font-black text-blue-600">{{ total_bought_items|default:"0" }}</h3>
+            </div>
+            
+            <!-- Total Spending -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Total Spent</p>
+                <h3 class="text-2xl font-bold text-slate-800">{{ total_spending|default:"0.00" }} TK</h3>
+            </div>
+
+            <!-- Active Bids -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Active Bids</p>
+                <h3 class="text-2xl font-bold text-amber-500">{{ active_bids_count|default:"0" }}</h3>
+            </div>
+
+            <!-- Saved Listings (Optional/Extra) -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Saved Items</p>
+                <h3 class="text-2xl font-bold text-slate-800">{{ saved_items_count|default:"0" }}</h3>
+            </div>
+        </div>
+
+        <!-- Analytics & Recent Purchases -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Spending Chart -->
+            <div class="lg:col-span-2 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                <h3 class="text-base font-bold text-slate-800 mb-4">Spending Overview (Monthly)</h3>
+                <div class="relative h-72 w-full">
+                    <canvas id="buyerSpendChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Recent Purchases -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col">
+                <h3 class="text-base font-bold text-slate-800 mb-4">Recent Purchases</h3>
+                <div class="space-y-4 overflow-y-auto max-h-72 pr-2 flex-1">
+                    {% for order in recent_purchases %}
+                    <div class="flex items-center gap-4 p-3 rounded-xl bg-slate-50 border border-slate-100 hover:border-slate-200 transition">
+                        <div class="h-10 w-10 rounded-lg bg-slate-200 border border-slate-200 overflow-hidden shrink-0">
+                            {% if order.listing.image %}
+                                <img src="{{ order.listing.image.url }}" class="h-full w-full object-cover">
+                            {% else %}
+                                <div class="h-full w-full flex items-center justify-center text-slate-400">
+                                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-bold text-slate-900 truncate">{{ order.listing.title }}</p>
+                            <p class="text-xs font-medium text-slate-500">{{ order.created_at|date:"M d, Y" }} <span class="mx-1">•</span> <span class="font-bold text-slate-700">{{ order.final_price }} TK</span></p>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="flex flex-col items-center justify-center h-full text-center py-6">
+                        <div class="h-12 w-12 bg-slate-100 rounded-full flex items-center justify-center mb-3 text-slate-300">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
+                        </div>
+                        <p class="text-sm font-medium text-slate-500">No recent purchases.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+                <a href="{% url 'orders-view' %}" class="mt-4 block text-center text-sm font-bold text-blue-600 hover:text-blue-700 transition">View All Orders &rarr;</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    // Line Chart for Buyer Spending
+    const ctxSpend = document.getElementById('buyerSpendChart').getContext('2d');
+    new Chart(ctxSpend, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+                label: 'Spent Amount (TK)',
+                data: [1500, 3000, 1200, 4500, 2000, 5500], // Pass real context data here
+                borderColor: '#3b82f6',
+                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#ffffff',
+                pointBorderColor: '#3b82f6',
+                pointBorderWidth: 2,
+                pointRadius: 4,
+                pointHoverRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { 
+                legend: { display: false },
+                tooltip: {
+                    padding: 12,
+                    backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                    titleFont: { size: 13, family: 'sans-serif' },
+                    bodyFont: { size: 14, weight: 'bold', family: 'sans-serif' }
+                }
+            },
+            scales: {
+                y: { 
+                    beginAtZero: true, 
+                    grid: { borderDash: [5, 5], color: '#f1f5f9' },
+                    border: { display: false }
+                },
+                x: { 
+                    grid: { display: false },
+                    border: { display: false }
+                }
+            }
+        }
+    });
+</script>
+{% endblock content %}
