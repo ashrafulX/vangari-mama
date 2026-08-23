@@ -8,6 +8,8 @@ from django.contrib.auth.decorators import login_required
 from bids.models import Offer
 from users.views import is_seller,is_buyer
 from django.contrib import messages 
+from notifications.models import Notifications
+
 # Create your views here.
 
 @login_required
@@ -28,6 +30,8 @@ def make_offer(request,id):
         )
         return redirect('view-details',id=id)
     return redirect('view-details',id=id)
+
+
 
 class Review_offer(LoginRequiredMixin,UserPassesTestMixin,ListView):
     model=Offer
@@ -54,6 +58,12 @@ def accept_offer(request,id):
     offer.status='ACCEPTED'
     offer.save(update_fields=['status'])
     messages.success(request,'Offer has been Accepted!')
+
+    Notifications.objects.create(
+        recipient=offer.buyer,
+        message=f"Your Offer for{offer.listing.title} has been Accepted!",
+        link=f"listings/view-details/{offer.listing.id}/"
+    )
     return redirect('review-offer') #dashboard
 
 
@@ -69,6 +79,11 @@ def reject_offer(request,id):
     offer.status='REJECTED'
     offer.save(update_fields=['status'])
     messages.success(request,'Offer Has been Rejected!')
+    Notifications.objects.create(
+            recipient=offer.buyer,
+            message=f"Your Offer for{offer.listing.title} has been Rejected!",
+            link=f"listings/view-details/{offer.listing.id}/"
+        )
     return redirect('review-offer') #dashboard
 
 
