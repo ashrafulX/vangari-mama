@@ -6,6 +6,16 @@ A Django-based online marketplace for buying and selling scrap and recyclable ma
 
 🔗 [https://vangari-mama.onrender.com](https://vangari-mama.onrender.com)
 
+## Screenshots
+
+| Marketplace | Listing Details |
+|---|---|
+| ![Marketplace](media/Me_Formall.jpeg) | ![Listing Details](screenshots/listing-details.png) |
+
+| Dashboard | Offers |
+|---|---|
+| ![Dashboard](screenshots/dashboard.png) | ![Offers](screenshots/offers.png) |
+
 ## Features
 
 ### Authentication & Users
