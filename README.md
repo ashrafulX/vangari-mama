@@ -10,7 +10,7 @@ A Django-based online marketplace for buying and selling scrap and recyclable ma
 
 | Marketplace | Listing Details |
 |---|---|
-| ![Marketplace](media/Me_Formall.jpeg) | ![Listing Details](screenshots/listing-details.png) |
+| ![Marketplace](media/profile_images/Me_Formal.jpeg) | ![Listing Details](screenshots/listing-details.png) |
 
 | Dashboard | Offers |
 |---|---|
