@@ -9,6 +9,7 @@ from decimal import Decimal
 from django.contrib import messages
 from django.views.generic import DetailView,ListView
 from django.db.models import Q
+from reviews.models import Review
 # Create your views here.
 class BuyListingView(LoginRequiredMixin,UserPassesTestMixin,View):
     
@@ -107,7 +108,10 @@ class OrderDetailView(LoginRequiredMixin,UserPassesTestMixin,DetailView):
         context['buyer']=self.object.buyer
         context['final_price']=self.object.final_price
         context['created_at']=self.object.created_at
+        existing_review = Review.objects.filter(order=self.object,reviewer=self.request.user).exists()
+        context['can_review'] =  not existing_review
         return context
+
 
 
 class OrdersView(LoginRequiredMixin,UserPassesTestMixin,ListView):
