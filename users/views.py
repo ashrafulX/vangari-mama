@@ -282,3 +282,5 @@ class EditProfileView(LoginRequiredMixin,UpdateView):
     def form_valid(self,form):
         form.save()
         return redirect('profile')
+
+
