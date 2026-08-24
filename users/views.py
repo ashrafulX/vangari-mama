@@ -83,6 +83,7 @@ def dashboard(request):
 
         context={
             'recent_purchases':recent_purchases,
+            
         }
         return render(request,'dashboard/buyer_dashboard.html',context)
     
