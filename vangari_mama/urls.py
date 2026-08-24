@@ -19,7 +19,7 @@ from django.urls import path,include
 from core.views import home,about_us,contact_us,services
 from django.conf import settings
 from django.conf.urls.static import static
-from debug_toolbar.toolbar import debug_toolbar_urls
+
 
 handler404 = 'core.views.custom_404'
 
@@ -41,7 +41,16 @@ urlpatterns = [
     path('services/',services,name='services'),
 
 
-]+ debug_toolbar_urls()
+]
+
+# Debug Toolbar only when DEBUG=True
+if settings.DEBUG:
+    from debug_toolbar.toolbar import debug_toolbar_urls
+
+    urlpatterns += debug_toolbar_urls()
+
+
+# Media files
 urlpatterns += static(
     settings.MEDIA_URL,
     document_root=settings.MEDIA_ROOT
