@@ -72,6 +72,7 @@ if DEBUG:
     "127.0.0.1",
     # ...
     ]
+    
 
 
 AUTHENTICATION_BACKENDS = [
@@ -91,6 +92,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                
             ],
         },
     },
@@ -119,7 +121,10 @@ DATABASES = {
         'PASSWORD': config('DB_PASSWORD', default=''),
         'HOST': config('DB_HOST', default='localhost'),
         'PORT': config('DB_PORT', cast=int)
-    }
+    },
+    'OPTIONS': {
+            'sslmode': 'require',
+        },
 }
 AUTH_USER_MODEL = 'users.CustomUser'
 EMAIL_BACKEND = config('EMAIL_BACKEND')

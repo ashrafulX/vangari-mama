@@ -40,10 +40,12 @@
 
         <!-- Main Product Card -->
         <div class="bg-white/80 backdrop-blur-xl rounded-[2rem] shadow-xl shadow-slate-200/50 overflow-hidden border border-white p-6 sm:p-10">
+            
+            <!-- Top Section: Image & Details Grid -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
                 
                 <!-- Left Column: Image -->
-                <div class="lg:col-span-6 flex flex-col gap-4 group">
+                <div class="lg:col-span-5 flex flex-col gap-4 group">
                     <div class="relative w-full h-80 sm:h-[460px] rounded-3xl bg-slate-100 overflow-hidden border border-slate-200/60 shadow-inner">
                         {% if object.image %}
                             <img src="{{ object.image.url }}" alt="{{ object.title }}" class="h-full w-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105">
@@ -64,140 +66,130 @@
                     </div>
                 </div>
 
-                <!-- Right Column: Details & Action Areas -->
-                <div class="lg:col-span-6 flex flex-col justify-between">
-                    <div>
-                        <!-- Title -->
-                        <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-6 leading-tight">
-                            {{ object.title }}
-                        </h1>
+                <!-- Right Column: Details Area -->
+                <div class="lg:col-span-7 flex flex-col">
+                    
+                    <!-- Title -->
+                    <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-6 leading-tight">
+                        {{ object.title }}
+                    </h1>
 
-                        <!-- Price and Quantity Stat Cards (Improved with Icons) -->
-                        <div class="grid grid-cols-2 gap-4 mb-8">
-                            <!-- Price Card -->
-                            <div class="p-5 rounded-2xl bg-white border border-slate-100 shadow-sm shadow-slate-100/50 flex items-start gap-4 transition hover:border-emerald-200 hover:shadow-emerald-100">
-                                <div class="p-3 bg-emerald-50 text-[#0FA968] rounded-xl shrink-0">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                </div>
-                                <div>
-                                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">Asking Price</span>
-                                    <span class="text-2xl font-black text-[#0FA968] block leading-none">{{ object.price }} TK</span>
-                                </div>
+                    <!-- Price and Quantity Stat Cards -->
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <!-- Price Card -->
+                        <div class="p-5 rounded-2xl bg-white border border-slate-100 shadow-sm shadow-slate-100/50 flex items-start gap-4 transition hover:border-emerald-200 hover:shadow-emerald-100">
+                            <div class="p-3 bg-emerald-50 text-[#0FA968] rounded-xl shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
                             </div>
-                            
-                            <!-- Quantity Card -->
-                            <div class="p-5 rounded-2xl bg-white border border-slate-100 shadow-sm shadow-slate-100/50 flex items-start gap-4 transition hover:border-blue-200 hover:shadow-blue-100">
-                                <div class="p-3 bg-blue-50 text-blue-600 rounded-xl shrink-0">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c1.4-1.4 4-2.25 6.75-2.25s5.35.85 6.75 2.25M12 20.25c-1.4-1.4-4-2.25-6.75-2.25S-.4 18.85 1 20.25m11-17.25c-1.4 1.4-4 2.25-6.75 2.25s-5.35-.85-6.75-2.25m13.5 0c1.4 1.4 4 2.25 6.75 2.25s5.35-.85 6.75-2.25" />
-                                    </svg>
-                                </div>
-                                <div>
-                                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">Total Quantity</span>
-                                    <span class="text-2xl font-black text-slate-800 block leading-none">{{ object.quantity|floatformat:2  }} KG</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Description -->
-                        <div class="mb-10">
-                            <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
-                                <span class="h-px w-6 bg-slate-200"></span> Details
-                            </h2>
-                            <div class="text-slate-600 leading-relaxed bg-slate-50/70 p-5 rounded-2xl border border-slate-100 text-sm sm:text-base">
-                                {{ object.description|default:"No description provided for this listing."|linebreaks }}
+                            <div>
+                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">Asking Price</span>
+                                <span class="text-2xl font-black text-[#0FA968] block leading-none">{{ object.price }} TK</span>
                             </div>
                         </div>
                         
+                        <!-- Quantity Card -->
+                        <div class="p-5 rounded-2xl bg-white border border-slate-100 shadow-sm shadow-slate-100/50 flex items-start gap-4 transition hover:border-blue-200 hover:shadow-blue-100">
+                            <div class="p-3 bg-blue-50 text-blue-600 rounded-xl shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c1.4-1.4 4-2.25 6.75-2.25s5.35.85 6.75 2.25M12 20.25c-1.4-1.4-4-2.25-6.75-2.25S-.4 18.85 1 20.25m11-17.25c-1.4 1.4-4 2.25-6.75 2.25s-5.35-.85-6.75-2.25m13.5 0c1.4 1.4 4 2.25 6.75 2.25s5.35-.85 6.75-2.25" />
+                                </svg>
+                            </div>
+                            <div>
+                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">Total Quantity</span>
+                                <span class="text-2xl font-black text-slate-800 block leading-none">{{ object.quantity|floatformat:2  }} KG</span>
+                            </div>
+                        </div>
+                    </div>
 
-                         <div class="mb-10">
-                            <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
-                                <span class="h-px w-6 bg-slate-200"></span> Address
-                            </h2>
-                            <div class="text-slate-600 leading-relaxed bg-slate-50/70 p-5 rounded-2xl border border-slate-100 text-sm sm:text-base">
+                    <!-- Description -->
+                    <div class="mb-8">
+                        <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                            <span class="h-px w-6 bg-slate-200"></span> Details
+                        </h2>
+                        <div class="text-slate-600 leading-relaxed bg-slate-50/70 p-5 rounded-2xl border border-slate-100 text-sm sm:text-base">
+                            {{ object.description|default:"No description provided for this listing."|linebreaks }}
+                        </div>
+                    </div>
+                    
+                    <!-- Address & Contact -->
+                    <div class="mb-4">
+                        <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                            <span class="h-px w-6 bg-slate-200"></span> Address & Contact
+                        </h2>
+                        <div class="text-slate-600 leading-relaxed bg-slate-50/70 p-5 rounded-2xl border border-slate-100 text-sm sm:text-base">
+                            <div class="mb-4">
+                                <strong class="text-slate-800 block mb-1 text-xs uppercase tracking-widest">Address:</strong>
                                 {{ address|default:"No Address provided for this seller."|linebreaks }}
-                               <h2 class="mt-6 text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
-                                <span class="h-px w-6 bg-slate-200"></span> Phone
-                            </h2>
+                            </div>
+                            <div>
+                                <strong class="text-slate-800 block mb-1 text-xs uppercase tracking-widest">Phone:</strong>
                                 {{phone}}
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
 
-                    <!-- ========================================== -->
-                    <!-- PLACEHOLDERS FOR BUY & BIDDING SYSTEM      -->
-                    <!-- ========================================== -->
-                    <div class="space-y-4 pt-6 border-t border-slate-100">
-                        
-                        <!-- 1. Instant Buy Section -->
-                        <div id="buy-section" class="rounded-2xl p-5 bg-gradient-to-r from-emerald-50 to-[#0FA968]/5 border border-emerald-100">
-                            <div class="flex items-center justify-between mb-4">
-                                <div>
-                                    <h3 class="text-base font-extrabold text-slate-900">Direct Purchase</h3>
-                                    <p class="text-xs font-medium text-slate-500 mt-0.5">Secure this item instantly.</p>
-                                </div>
-                                <span class="text-xl font-black text-[#0FA968] bg-white px-3 py-1 rounded-lg shadow-sm border border-emerald-50">{{ totalprice|floatformat:2 }} TK</span>
-                            </div>
-                            
-                            <!-- TODO: Replace with actual Buy form -->
-                            <a  href="{% url "buy-item" object.id %}" class="group w-full inline-flex items-center justify-center gap-2 rounded-xl bg-[#0FA968] px-6 py-4 text-sm font-bold text-white shadow-lg shadow-emerald-500/25 transition-all hover:bg-[#0c8e57] hover:-translate-y-0.5 outline-none">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 transition-transform group-hover:scale-110">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-                                </svg>
-                                Proceed to Buy
-                            </a>
+            <!-- ========================================== -->
+            <!-- BUY & BIDDING SYSTEM (NOW SIDE-BY-SIDE)    -->
+            <!-- ========================================== -->
+            <div class="mt-8 pt-8 border-t border-slate-100 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                
+                <!-- 1. Instant Buy Section -->
+                <div id="buy-section" class="rounded-2xl p-6 bg-gradient-to-r from-emerald-50 to-[#0FA968]/5 border border-emerald-100 flex flex-col justify-between h-full">
+                    <div class="flex items-center justify-between mb-6">
+                        <div>
+                            <h3 class="text-lg font-extrabold text-slate-900">Direct Purchase</h3>
+                            <p class="text-sm font-medium text-slate-500 mt-0.5">Secure this item instantly.</p>
                         </div>
-
-                        <!-- 2. Bidding / Offer Form -->
-                        <div id="offer-bidding-section" class="rounded-2xl p-5 bg-white border border-slate-200 shadow-sm hover:border-slate-300 transition-colors">
-                            <div class="mb-4">
-                                <h3 class="text-sm font-extrabold text-slate-900">Make an Offer</h3>
-                                <p class="text-xs font-medium text-slate-500 mt-0.5">Propose a different price to the seller.</p>
-                            </div>
-                            
-                            <!-- TODO: Put actual form here -->
-                            <form method="post" action="{% url 'make-offer' object.id %}" class="flex gap-3">
-                                {% csrf_token %}
-
-                                <div class="relative flex-1">
-                                    <input
-                                        type="number"
-                                        name="amount"
-                                        step="0.01"
-                                        min="0"
-                                        placeholder="Enter total amount..."
-                                        class="w-full pl-4 pr-12 py-3.5 rounded-xl border border-slate-200 bg-slate-50 text-sm font-bold text-slate-800 focus:bg-white focus:border-[#0FA968] focus:ring-4 focus:ring-emerald-100 outline-none transition"
-                                        required
-                                    >
-
-                                    <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
-                                        <span class="text-xs font-bold text-slate-400">TK</span>
-                                    </div>
-                                </div>
-
-                                <button
-                                    type="submit"
-                                    class="px-6 py-3.5 rounded-xl bg-slate-900 text-white text-sm font-bold hover:bg-slate-800 transition shadow-md shadow-slate-900/20 flex items-center gap-2"
-                                >
-                                    Submit
-
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="2.5"
-                                        stroke="currentColor"
-                                        class="w-4 h-4">
-                                        <path stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                                    </svg>
-                                </button>
-                            </form>
-                        </div>
-
+                        <span class="text-2xl font-black text-[#0FA968] bg-white px-4 py-2 rounded-xl shadow-sm border border-emerald-50">{{ totalprice|floatformat:2 }} TK</span>
                     </div>
+                    
+                    <a href="{% url 'buy-item' object.id %}" class="group w-full inline-flex items-center justify-center gap-2 rounded-xl bg-[#0FA968] px-6 py-4 text-base font-bold text-white shadow-lg shadow-emerald-500/25 transition-all hover:bg-[#0c8e57] hover:-translate-y-0.5 outline-none mt-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5 transition-transform group-hover:scale-110">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                        </svg>
+                        Proceed to Buy
+                    </a>
+                </div>
+
+                <!-- 2. Bidding / Offer Form -->
+                <div id="offer-bidding-section" class="rounded-2xl p-6 bg-white border border-slate-200 shadow-sm hover:border-slate-300 transition-colors flex flex-col justify-between h-full">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-extrabold text-slate-900">Make an Offer</h3>
+                        <p class="text-sm font-medium text-slate-500 mt-0.5">Propose a different price to the seller.</p>
+                    </div>
+                    
+                    <form method="post" action="{% url 'make-offer' object.id %}" class="flex flex-col sm:flex-row gap-3 mt-auto">
+                        {% csrf_token %}
+
+                        <div class="relative flex-1">
+                            <input
+                                type="number"
+                                name="amount"
+                                step="0.01"
+                                min="0"
+                                placeholder="Enter total amount..."
+                                class="w-full pl-4 pr-12 py-4 rounded-xl border border-slate-200 bg-slate-50 text-base font-bold text-slate-800 focus:bg-white focus:border-[#0FA968] focus:ring-4 focus:ring-emerald-100 outline-none transition"
+                                required
+                            >
+                            <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+                                <span class="text-sm font-bold text-slate-400">TK</span>
+                            </div>
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="px-8 py-4 rounded-xl bg-slate-900 text-white text-base font-bold hover:bg-slate-800 transition shadow-md shadow-slate-900/20 flex items-center justify-center gap-2 shrink-0"
+                        >
+                            Submit
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-4 h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                            </svg>
+                        </button>
+                    </form>
                 </div>
 
             </div>

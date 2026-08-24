@@ -2799,10 +2799,6 @@ video {
   padding-top: 1.25rem;
 }
 
-.pt-6 {
-  padding-top: 1.5rem;
-}
-
 .pt-8 {
   padding-top: 2rem;
 }
@@ -4314,8 +4310,12 @@ video {
     grid-column: span 2 / span 2;
   }
 
-  .lg\:col-span-6 {
-    grid-column: span 6 / span 6;
+  .lg\:col-span-5 {
+    grid-column: span 5 / span 5;
+  }
+
+  .lg\:col-span-7 {
+    grid-column: span 7 / span 7;
   }
 
   .lg\:mx-0 {

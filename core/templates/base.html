@@ -60,7 +60,7 @@
                 {% if user.is_authenticated %}
                     
                     <!-- Notification Bell -->
-                     <a href="{% url "noticications" %}">
+                     <a href="{% url "notifications" %}">
                     <button type="button"  class="relative p-2 text-gray-200 hover:text-white transition-colors rounded-full hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-green-400">
                         <span class="absolute top-2 right-2 flex h-2 w-2">
                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
@@ -124,12 +124,14 @@
             <div class="flex md:hidden items-center gap-3">
                 {% if user.is_authenticated %}
                     <!-- Mobile Notification Bell -->
-                    <button type="button" class="relative p-2 text-white hover:bg-white/10 rounded-full transition-colors">
+                    <a href="{% url "notifications" %}">
+                        <button type="button" class="relative p-2 text-white hover:bg-white/10 rounded-full transition-colors">
                         <span class="absolute top-2 right-2 h-2 w-2 rounded-full bg-red-500 border border-[#14532D]"></span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
                         </svg>
                     </button>
+                    </a>
                 {% endif %}
 
                 <button type="button" id="mobile-menu-btn" class="inline-flex items-center justify-center p-2.5 rounded-full text-white bg-white/5 hover:bg-white/10 border border-white/10 focus:outline-none transition-colors">
