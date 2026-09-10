@@ -105,3 +105,4 @@ def offers(request):
 
     bids=Offer.objects.select_related('listing','buyer').filter(listing__seller=request.user).order_by('-created_at')
     return render(request,'bid/offer_list.html',{'bids':bids})
+    
