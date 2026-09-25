@@ -1,13 +1,21 @@
 {
-    "builds": [{
+  "builds": [
+    {
       "src": "vangari_mama/wsgi.py",
-      "use": "@vercel/python",
-      "config": { "maxLambdaSize": "15mb", "runtime": "python3.11.3" }
-    }],
-    "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "vangari_mama/wsgi.py"
-      }
-    ]
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      },
+      "continue": true
+    },
+    {
+      "src": "/(.*)",
+      "dest": "vangari_mama/wsgi.py"
+    }
+  ]
 }
