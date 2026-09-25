@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 
 from pathlib import Path
 from decouple import config
+import cloudinary
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['.vercel.app','127.0.0.1']
 
 
 # Application definition
@@ -49,6 +51,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    "cloudinary",
+    "cloudinary_storage",
 ]
 if DEBUG:
     INSTALLED_APPS+=["debug_toolbar"]
@@ -98,7 +102,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'vangari_mama.wsgi.application'
+WSGI_APPLICATION = 'vangari_mama.wsgi.app'
 
 
 # Database
@@ -110,6 +114,14 @@ WSGI_APPLICATION = 'vangari_mama.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
+cloudinary.config( 
+  cloud_name = config('cloud_name'),
+  api_key = config('api_key'),
+  api_secret =config('api_secret'),
+  secure=config('secure'),
+)
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 # For Postgres
@@ -126,6 +138,7 @@ DATABASES = {
             'sslmode': 'require',
         },
 }
+
 AUTH_USER_MODEL = 'users.CustomUser'
 EMAIL_BACKEND = config('EMAIL_BACKEND')
 EMAIL_HOST = config('EMAIL_HOST')
@@ -186,6 +199,8 @@ STATICFILES_DIRS = [
     BASE_DIR/'static',
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE="whitenoise.storage.CompressedStaticFilesStorage"
+
 
 
 # Email
