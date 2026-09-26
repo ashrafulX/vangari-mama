@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from phonenumber_field.modelfields import PhoneNumberField
-
+from cloudinary.models import CloudinaryField
 # Create your models here.
 
 class CustomUser(AbstractUser):
@@ -9,7 +9,8 @@ class CustomUser(AbstractUser):
         ("SELLER", "SELLER"),
         ("BUYER", "BUYER"),
     )
-    profile_image=models.ImageField(upload_to='profile_images',blank=True)
+    # profile_image=models.ImageField(upload_to='profile_images',blank=True)
+    profile_image=CloudinaryField('image',blank=True,null=True)
     bio=models.TextField(blank=True)
     phone = PhoneNumberField(region='BD',blank=True)
 

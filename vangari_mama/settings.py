@@ -229,6 +229,11 @@ CSRF_TRUSTED_ORIGINS = [
     "https://vangarimama.vercel.app",
 ]
 
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+CSRF_COOKIE_SAMESITE = "Lax"
+SESSION_COOKIE_SAMESITE = "Lax"
 
 from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {

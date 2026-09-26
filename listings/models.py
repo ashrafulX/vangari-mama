@@ -1,5 +1,7 @@
 from django.db import models
 from users.models import CustomUser
+from cloudinary.models import CloudinaryField
+
 # Create your models here.
 
 class Category(models.Model):
@@ -13,7 +15,8 @@ class Listing(models.Model):
     description=models.TextField(blank=True)
     price=models.DecimalField(max_digits=10,decimal_places=2)
     quantity=models.DecimalField(max_digits=10,decimal_places=2)
-    image=models.ImageField(upload_to='listings/',blank=True,null=True)
+    # image=models.ImageField(upload_to='listings/',blank=True,null=True)
+    image=CloudinaryField('image')
     status = models.CharField(max_length=20,choices=[("AVAILABLE", "Available"),("SOLD_OUT", "Sold Out"),],default="AVAILABLE")
     created_at=models.DateTimeField(auto_now_add=True)
     seller=models.ForeignKey(CustomUser,on_delete=models.CASCADE,related_name='listings')
